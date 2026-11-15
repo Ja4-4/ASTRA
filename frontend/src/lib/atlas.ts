@@ -226,6 +226,9 @@ const L = (ar: boolean, en: string, arText: string) => (ar ? arText : en);
 /** Questions the rules answer better than the model: the app's own pages, re-entry and message delay (English). */
 const RULES_ONLY = /what is this|this page|where am i|what can i do here|help|re-?entry|landing|gravity|ready|go home|delay|message|reach earth|doctor|surgeon/;
 
+/** Replies where the model only refuses ("I cannot ...", "no access", "not able"). */
+const REFUSAL = /\b(cannot|can't|can not|unable|not able|no access|full access|don't have access|do not have access|not allowed)\b|لا أستطيع|لا يمكنني|غير قادر|ليس لدي صلاحية|لا أملك صلاحية|لا أملك وصول/i;
+
 const MODEL_TTL_MS = 30_000;
 let modelState: { at: number; ok: boolean; hint?: string } | null = null;
 async function modelAvailable(): Promise<{ ok: boolean; hint?: string }> {
@@ -384,8 +387,15 @@ export async function askAtlasSmart(question: string, ctx: AtlasContext): Promis
       if (ui.op === 'stop_speaking') return { text: say || L(arr_, 'Okay.', 'حسناً.'), silence: true, source: 'ai', lang: rlang };
       return { text: say || L(arr_, 'Done.', 'تم.'), source: 'ai', lang: rlang };
     }
-    case 'chat': case 'needs_clarification':
+    case 'chat': case 'needs_clarification': {
+      // the small model says "I cannot do that / I have no access" to things it just does not know: answer with what Atlas really can do
+      if (r.status === 'chat' && REFUSAL.test(say)) {
+        const GENERIC = /^I can answer about/;
+        if (!ar && !GENERIC.test(rules.text)) return { ...rules, source: 'rules' };
+        return { text: L(arr_, 'I could not do that one. I can read your numbers, save a measurement, open any page, show the heart or another body part, and switch dark or light mode. Try: show my heart, or log my sleep 7 hours.', 'لم أستطع تنفيذ هذا. أستطيع قراءة أرقامك وحفظ قياس وفتح أي صفحة وعرض القلب أو أي جزء من الجسم وتبديل الوضع الداكن أو الفاتح. جرّب: اعرض قلبي، أو سجّل نومي ٧ ساعات.'), source: 'ai', lang: rlang };
+      }
       return { text: say, source: 'ai', lang: rlang };
+    }
     default: {
       // the model's answer was not usable: the rules still answer what they can
       forgetModelState();

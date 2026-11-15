@@ -25,7 +25,8 @@ interface Recognition {
 }
 type RecognitionCtor = new () => Recognition;
 const w = typeof window === 'undefined' ? undefined : (window as unknown as { SpeechRecognition?: RecognitionCtor; webkitSpeechRecognition?: RecognitionCtor });
-const SpeechRec: RecognitionCtor | undefined = w?.SpeechRecognition ?? w?.webkitSpeechRecognition;
+// The hosted demo page runs in a sandboxed frame that refuses the microphone, so it offers typing only.
+const SpeechRec: RecognitionCtor | undefined = import.meta.env.MODE === 'artifact' ? undefined : (w?.SpeechRecognition ?? w?.webkitSpeechRecognition);
 
 /** In the voice view, a model answer slower than this is replaced by the rules answer, so the view never hangs. */
 const VOICE_WAIT_MS = 12_000;
@@ -84,6 +85,8 @@ export function AtlasDock() {
   const [wakeOn, setWakeOn] = useState<boolean>(() => readPref(WAKE_KEY) !== 'off');
   /** Whether the "Atlas" listener is running, and why not when it is not. */
   const [wakeState, setWakeState] = useState<'off' | 'on' | 'blocked'>('off');
+  /** Bumped to try the name listener again (a tap anywhere counts as the user gesture some browsers want). */
+  const [wakeNonce, setWakeNonce] = useState(0);
   const rec = useRef<Recognition | null>(null);
   const closeTimer = useRef<number | null>(null);
   /** Bumped when Atlas closes or starts listening again: a late answer from before is shown but not spoken. */
@@ -173,7 +176,7 @@ export function AtlasDock() {
   };
 
   /** Say the answer, run any command, then close the voice view a moment after Atlas stops talking. */
-  const respond = (a: AtlasAnswer, fromVoice: boolean) => {
+  const respond = (a: AtlasAnswer, fromVoice: boolean, settled = false) => {
     if (a.navigate) navigate(a.navigate);
     else if (a.focus) {
       // The 3D body lives on Home: go there, then fly the camera to the part Atlas is talking about.
@@ -190,8 +193,10 @@ export function AtlasDock() {
       setVoiceState('idle');
       if (!fromVoice) { if (a.end || (a.close && !showing)) setMode('closed'); return; }
       if (a.end) { closeTimer.current = window.setTimeout(closeAll, 500); return; }
-      // the conversation goes on: listen again (also for the yes or no of a write that is waiting)
-      void waitingForYes;
+      // a finished task (something was done or shown): Atlas goes back to sleep until it hears its name again
+      if (!waitingForYes && (settled || a.did || a.focus || a.navigate)) { closeTimer.current = window.setTimeout(closeAll, 900); return; }
+      // a plain answer, or a write waiting for yes/no: listen once more, then sleep if nothing is said
+      silentRounds.current = waitingForYes ? 0 : MAX_SILENT_ROUNDS - 1;
       window.setTimeout(() => listen(), 300);
     };
     const quiet = a.silence || !speakAloud || !('speechSynthesis' in window);
@@ -224,13 +229,10 @@ export function AtlasDock() {
     const out = await settleAtlas(answer.confirm, approve, ar);
     const settled: Turn['settled'] = !approve ? 'cancelled' : out.ok ? 'approved' : 'failed';
     setTurns((t) => t.map((x) => (x.id === turnId ? { ...x, settled, note: out.text } : x)));
-    const a: SmartAnswer = { text: out.text, source: 'ai', lang: answer.lang, status: approve && out.ok ? 'ok' : undefined };
-    if (approve && out.ok && out.did) {
-      logDid(out.did);
-      useAstra.getState().toast({ kind: 'info', title: 'Atlas', body: out.did });
-    }
+    const a: SmartAnswer = { text: out.text, source: 'ai', lang: answer.lang, status: approve && out.ok ? 'ok' : undefined, did: approve && out.ok ? out.did : undefined };
+    if (approve && out.ok && out.did) useAstra.getState().toast({ kind: 'info', title: 'Atlas', body: out.did });
     setReply(a);
-    respond(a, fromVoice);
+    respond(a, fromVoice, true);
   };
 
   /** One question, from the voice or the keyboard. A yes or no answers a write that is waiting. */
@@ -423,11 +425,27 @@ export function AtlasDock() {
       release: () => { wakeOwns.current = false; halt(); },
     };
     return () => { stopped = true; halt(); wakeCtl.current = null; wakeOwns.current = false; };
-  }, [wakeOn, lang]);
+  }, [wakeOn, lang, wakeNonce]);
+  // blocked or not started yet: the first tap or key press anywhere asks the browser for the microphone and tries again
+  useEffect(() => {
+    if (!wakeOn || !SpeechRec || wakeState !== 'blocked') return;
+    const retry = () => {
+      void navigator.mediaDevices?.getUserMedia({ audio: true }).then((st) => { st.getTracks().forEach((t) => t.stop()); setWakeState('off'); setWakeNonce((n) => n + 1); }).catch(() => { /* still blocked */ });
+    };
+    window.addEventListener('pointerdown', retry, { once: true });
+    window.addEventListener('keydown', retry, { once: true });
+    return () => { window.removeEventListener('pointerdown', retry); window.removeEventListener('keydown', retry); };
+  }, [wakeOn, wakeState]);
+  // the browser pauses listening in a hidden tab: start again when it comes back
+  useEffect(() => {
+    const back = () => { if (document.visibilityState === 'visible' && wakeOn) setWakeNonce((n) => n + 1); };
+    document.addEventListener('visibilitychange', back);
+    return () => document.removeEventListener('visibilitychange', back);
+  }, [wakeOn]);
   useEffect(() => {
     if (!wakeOn || !SpeechRec) { setWakeState('off'); return; }
     wakeCtl.current?.sync(mode === 'closed');
-  }, [mode, wakeOn, lang]);
+  }, [mode, wakeOn, lang, wakeNonce]);
 
   const toggleQuick = () => {
     const next = !quickSave;
@@ -435,6 +453,7 @@ export function AtlasDock() {
     writePref(QUICK_KEY, next ? 'on' : 'off');
   };
   const toggleWake = () => {
+    if (wakeOn && wakeState === 'blocked') { setWakeState('off'); setWakeNonce((n) => n + 1); return; } // a tap on "Tap to allow mic" tries again
     const next = !wakeOn;
     setWakeOn(next);
     writePref(WAKE_KEY, next ? 'on' : 'off');
@@ -543,10 +562,10 @@ export function AtlasDock() {
 
       {SpeechRec && mode === 'closed' && (
         <button type="button" onClick={toggleWake} aria-pressed={wakeOn} data-testid="atlas-wake"
-          title={wakeState === 'blocked' ? 'The microphone is blocked in this browser' : wakeOn ? 'Atlas is listening for its name. Tap to turn off.' : 'Tap to let Atlas listen for its name.'}
+          title={wakeState === 'blocked' ? 'Allow the microphone for this page, then tap here' : wakeOn ? 'Atlas is listening for its name. Tap to turn off.' : 'Tap to let Atlas listen for its name.'}
           className="fixed bottom-[160px] right-3 z-[60] flex items-center gap-1.5 rounded-full border border-line-strong bg-s1 px-3 py-1.5 text-[12px] text-muted shadow-lg hover:text-text md:bottom-[100px] md:right-5">
           <Ear size={14} aria-hidden="true" className={wakeState === 'on' ? 'text-brand' : ''} />
-          {wakeState === 'blocked' ? 'Mic blocked' : wakeOn ? (wakeState === 'on' ? 'Say “Atlas”' : 'Starting…') : 'Name off'}
+          {wakeState === 'blocked' ? 'Tap to allow mic' : wakeOn ? (wakeState === 'on' ? 'Say “Atlas”' : 'Starting…') : 'Name off'}
         </button>
       )}
 

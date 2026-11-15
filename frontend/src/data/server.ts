@@ -15,7 +15,7 @@ async function http<T>(method: string, path: string, body?: unknown, timeoutMs =
   try {
     const res = await fetch(`${BASE}${path}`, {
       method,
-      headers: body === undefined ? undefined : { 'content-type': 'application/json' },
+      headers: body === undefined ? { 'ngrok-skip-browser-warning': '1' } : { 'content-type': 'application/json', 'ngrok-skip-browser-warning': '1' },
       body: body === undefined ? undefined : JSON.stringify(body),
       signal: ctl.signal,
     });

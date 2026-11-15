@@ -188,30 +188,48 @@ with sync_playwright() as pw:
     check('saying "Atlas" opens the voice view with the bar (the microphone is on without a tap)', vp.locator('[data-testid=atlas-voicebar] canvas').count() == 1)
     vp.wait_for_timeout(500); vp.screenshot(path=OUT + '/shot_voice_listening.png')
     say('Atlas how is my heart rate', True)
-    vt = ''
+    vt = ''; h = 999
+    for _ in range(60):
+        vp.wait_for_timeout(120)
+        got = vp.evaluate("(() => { const d = document.querySelector('div[role=dialog][aria-label=\"Talking to Atlas\"]'); return d ? [d.innerText, d.getBoundingClientRect().height] : ['', 999]; })()")
+        vt = got[0]
+        if re.search(r'\d+\s*(bpm|beats)', vt):
+            vp.wait_for_timeout(500)
+            h = vp.evaluate("(() => { const d = document.querySelector('div[role=dialog][aria-label=\"Talking to Atlas\"]'); return d ? d.getBoundingClientRect().height : 0; })()") or got[1]
+            vp.screenshot(path=OUT + '/shot_voice_answer.png'); break
+    check('the spoken question is answered with the real value on screen', re.search(r'\d+\s*(bpm|beats)', vt) is not None, vt[:300])
+    check('when the answer is on the 3D body, Atlas lowers itself to a slim strip', h < 260, h)
+    vp.wait_for_selector('[data-testid=atlas-voicebar]', state='detached', timeout=15000)
+    check('after the task is done Atlas goes idle by itself (no tap needed)', True)
+    wait_listening()
+    check('and the name listener is back, waiting to hear "Atlas" again', vp.locator('[data-testid=atlas-wake]').inner_text().strip().startswith('Say'), vp.locator('[data-testid=atlas-wake]').inner_text())
+    say('Atlas', False); vp.wait_for_selector('[data-testid=atlas-voicebar]', timeout=5000)
+    say('Atlas hello there', True)
+    for _ in range(40):
+        vp.wait_for_timeout(150)
+        vt = dlg().inner_text() if dlg().count() else ''
+        if 'stub' in vt: break
+    check('a plain question is answered', 'stub' in vt, vt[:200])
+    wait_listening()
+    check('after a plain answer Atlas listens once more for a follow-up', dlg().count() == 1 and vp.locator('[data-testid=atlas-voicebar]').count() == 1)
+    say('how is my heart rate', True)               # no need to say the name again
     for _ in range(40):
         vp.wait_for_timeout(150)
         vt = dlg().inner_text() if dlg().count() else ''
         if re.search(r'\d+\s*(bpm|beats)', vt): break
-    check('the spoken question is answered with the real value on screen', re.search(r'\d+\s*(bpm|beats)', vt) is not None, vt[:300])
-    vp.wait_for_timeout(1200); vp.screenshot(path=OUT + '/shot_voice_answer.png')
-    h = dlg().bounding_box()['height'] if dlg().count() else 999
-    check('when the answer is on the 3D body, Atlas lowers itself to a slim strip', h < 260, h)
-    wait_listening()
-    check('Atlas keeps listening after it answers (an ongoing conversation)', dlg().count() == 1 and vp.locator('[data-testid=atlas-voicebar]').count() == 1)
-    say('how is my blood pressure', True)          # no need to say the name again
-    for _ in range(40):
-        vp.wait_for_timeout(150)
-        vt = dlg().inner_text() if dlg().count() else ''
-        if re.search(r'\d{2,3}/\d{2,3}', vt): break
-    check('a follow-up question without the name is answered too', re.search(r'\d{2,3}/\d{2,3}|blood pressure', vt, re.I) is not None, vt[:300])
-    wait_listening(); n1 = len(meas())
-    say('log my sleep 7 hours', True)               # quick save: done at once and read back
-    vp.wait_for_function('1', timeout=1000); vp.wait_for_timeout(3500)
-    check('a spoken log command is carried out at once and saved on the server', len(meas()) == n1 + 1 and any(m['source_name'] == 'Atlas assistant' for m in meas()[-4:]), len(meas()) - n1)
-    check('Atlas shows what it did on screen', vp.locator('[data-testid=atlas-did]').count() == 1 and 'Saved' in vp.locator('[data-testid=atlas-did]').inner_text(), vp.locator('[data-testid=atlas-did]').count())
-    vp.screenshot(path=OUT + '/shot_voice_did.png')
-    wait_listening()
+    check('a follow-up question without the name is answered too', re.search(r'\d+\s*(bpm|beats)', vt) is not None, vt[:300])
+    vp.wait_for_selector('[data-testid=atlas-voicebar]', state='detached', timeout=15000); wait_listening()
+    n1 = len(meas()); at1 = len([m for m in meas() if m['source_name'] == 'Atlas assistant'])
+    say('Atlas log my sleep 7 hours', True)         # quick save: done at once, read back, then idle
+    saw = False
+    for _ in range(60):
+        vp.wait_for_timeout(120)
+        if vp.locator('[data-testid=atlas-did]').count() and 'Saved' in vp.locator('[data-testid=atlas-did]').inner_text(): saw = True; vp.screenshot(path=OUT + '/shot_voice_did.png'); break
+    check('Atlas shows what it did on screen', saw)
+    vp.wait_for_timeout(1500)
+    check('a spoken log command is carried out at once and saved on the server', len(meas()) == n1 + 1 and len([m for m in meas() if m['source_name'] == 'Atlas assistant']) == at1 + 1, len(meas()) - n1)
+    vp.wait_for_selector('[data-testid=atlas-voicebar]', state='detached', timeout=15000); wait_listening()
+    vp.get_by_label('Talk to Atlas').click(); vp.wait_for_selector('[data-testid=atlas-voicebar]', timeout=5000)
     vp.get_by_role('button', name=re.compile('Quick save')).click(); n2 = len(meas())
     say('log my sleep 7 hours', True); vp.wait_for_selector('[data-testid=atlas-voice-confirm]', timeout=15000)
     check('with quick save off a spoken write waits for a yes: nothing saved yet', len(meas()) == n2)
@@ -220,8 +238,10 @@ with sync_playwright() as pw:
     check('while Atlas waits for the yes, the question and the buttons stay on screen', vp.locator('[data-testid=atlas-voice-confirm]').count() == 1)
     say('yes', True); vp.wait_for_timeout(3000)
     check('saying yes saves it', len(meas()) == n2 + 1, len(meas()) - n2)
-    wait_listening()
-    vp.evaluate('window.__silence()'); vp.wait_for_timeout(700); wait_listening()
+    vp.wait_for_selector('[data-testid=atlas-voicebar]', state='detached', timeout=15000); wait_listening()
+    vp.get_by_label('Talk to Atlas').click(); vp.wait_for_selector('[data-testid=atlas-voicebar]', timeout=5000)
+    vp.get_by_role('button', name=re.compile('Quick save')).click()
+    wait_listening(); vp.evaluate('window.__silence()'); vp.wait_for_timeout(700); wait_listening()
     check('when nothing is heard Atlas tries again once, still open', dlg().count() == 1)
     vp.evaluate('window.__silence()')
     vp.wait_for_selector('[data-testid=atlas-voicebar]', state='detached', timeout=12000)

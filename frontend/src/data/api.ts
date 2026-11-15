@@ -90,7 +90,7 @@ async function request<T>(path: string, init: RequestInit = {}, timeoutMs = 8000
   const ctl = new AbortController();
   const timer = window.setTimeout(() => ctl.abort(), timeoutMs);
   try {
-    const res = await fetch(`${BASE}${path}`, { ...init, signal: ctl.signal, headers: { 'Content-Type': 'application/json', ...init.headers } });
+    const res = await fetch(`${BASE}${path}`, { ...init, signal: ctl.signal, headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': '1', ...init.headers } });
     if (!res.ok) {
       console.warn(`[api] ${init.method ?? 'GET'} ${path} answered HTTP ${res.status}`);
       return null;
@@ -112,10 +112,10 @@ export async function probe(): Promise<{ online: boolean }> {
   if (OFFLINE_BUILD) return { online: false };
   if (probed && Date.now() - probed.at < PROBE_TTL_MS) return { online: probed.online };
   const ctl = new AbortController();
-  const timer = window.setTimeout(() => ctl.abort(), 1500);
+  const timer = window.setTimeout(() => ctl.abort(), 4000);
   let online = false;
   try {
-    const res = await fetch(`${BASE}/health`, { signal: ctl.signal });
+    const res = await fetch(`${BASE}/health`, { signal: ctl.signal, headers: { 'ngrok-skip-browser-warning': '1' } });
     online = res.ok && ((await res.json()) as { status?: string }).status === 'ok';
   } catch {
     online = false; // server off or not answering: demo data, by design

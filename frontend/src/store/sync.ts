@@ -86,7 +86,7 @@ export function startSync(): () => void {
   const flushBeforeLeaving = () => {
     const id = aid();
     if (id === null) return;
-    try { void fetch(`${BASE}/astronauts/${id}/state`, { method: 'PUT', keepalive: true, headers: { 'content-type': 'application/json' }, body: JSON.stringify({ state: savable(useAstra.getState()) }) }); } catch { /* best effort */ }
+    try { void fetch(`${BASE}/astronauts/${id}/state`, { method: 'PUT', keepalive: true, headers: { 'content-type': 'application/json', 'ngrok-skip-browser-warning': '1' }, body: JSON.stringify({ state: savable(useAstra.getState()) }) }); } catch { /* best effort */ }
   };
   window.addEventListener('pagehide', flushBeforeLeaving);
 
