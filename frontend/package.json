@@ -1,0 +1,50 @@
+{
+  "name": "astra-dashboard",
+  "private": true,
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "build:artifact": "tsc -b && vite build --mode artifact --base ./ --outDir dist-artifact --emptyOutDir && rm -rf dist-artifact/models dist-artifact/mediapipe && node scripts/strip-skeleton.mjs dist-artifact/index.html",
+    "gen:demo": "tsx scripts/gen-demo.ts",
+    "inspect:model": "gltf-transform inspect public/models/astra_body.glb",
+    "predev": "node scripts/copy-mediapipe.mjs",
+    "prebuild": "node scripts/copy-mediapipe.mjs"
+  },
+  "dependencies": {
+    "@fontsource/atkinson-hyperlegible-next": "^5.3.0",
+    "@fontsource/chakra-petch": "^5.3.0",
+    "@fontsource/readex-pro": "^5.3.0",
+    "@mediapipe/tasks-vision": "1.2.2",
+    "@react-three/drei": "9.122.0",
+    "@react-three/fiber": "8.18.0",
+    "@react-three/postprocessing": "2.19.1",
+    "date-fns": "3.6.0",
+    "framer-motion": "11.18.2",
+    "lucide-react": "0.469.0",
+    "postprocessing": "6.36.7",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-router-dom": "6.30.6",
+    "recharts": "2.15.4",
+    "three": "0.170.0",
+    "zustand": "4.5.7"
+  },
+  "devDependencies": {
+    "@gltf-transform/cli": "4.2.1",
+    "@types/react": "18.3.31",
+    "@types/react-dom": "18.3.7",
+    "@types/three": "0.170.0",
+    "@vitejs/plugin-react": "4.7.0",
+    "autoprefixer": "10.4.21",
+    "postcss": "8.5.6",
+    "tailwindcss": "3.4.19",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3",
+    "vite": "5.4.21"
+  }
+}

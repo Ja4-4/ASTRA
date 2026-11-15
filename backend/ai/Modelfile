@@ -1,0 +1,13 @@
+# Registers Qwen2.5-0.5B in Ollama under the name "ai"  (the name ASTRA uses).
+#
+#   ollama list                          # see the exact tag you downloaded (e.g. qwen2.5:0.5b or qwen2.5:0.5b-instruct)
+#   ollama create ai -f ai/Modelfile     # run from the project folder
+#   ollama run ai "hello"                # quick test
+#
+# If your tag differs, change the FROM line. If you only have a .gguf file instead of an Ollama model:
+#   FROM ./qwen2.5-0.5b-instruct-q4_k_m.gguf
+FROM qwen2.5:0.5b
+
+# Low temperature: the assistant explains data, it should not get creative.
+PARAMETER temperature 0.3
+PARAMETER num_ctx 4096

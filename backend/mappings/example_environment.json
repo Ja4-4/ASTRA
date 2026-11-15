@@ -1,0 +1,15 @@
+{
+  "_comment": "EXAMPLE ONLY. For ISS cabin / environmental data (mission-context view). Goes to the env_readings table; no health-unit conversion.",
+  "target": "env",
+  "source_name": "Example environment file",
+  "source_type": "imported",
+  "format": "wide",
+  "timestamp_col": "datetime",
+  "wide": {
+    "columns": {
+      "temperature_c": {"indicator": "cabin_temp", "unit": "°C"},
+      "co2_ppm":       {"indicator": "co2",        "unit": "ppm"},
+      "humidity_pct":  {"indicator": "humidity",   "unit": "%"}
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "target": "env",
+  "source_name": "NASA OSDR Environmental Data App (ISS) - RR-3",
+  "source_type": "imported",
+  "format": "wide",
+  "timestamp_col": "date_utc",
+  "wide": {
+    "columns": {
+      "gcr_mGy_d": {
+        "indicator": "radiation_gcr_dose",
+        "unit": "mGy/day"
+      },
+      "saa_mGy_d": {
+        "indicator": "radiation_saa_dose",
+        "unit": "mGy/day"
+      },
+      "total_mGy_d": {
+        "indicator": "radiation_total_dose",
+        "unit": "mGy/day"
+      }
+    }
+  }
+}

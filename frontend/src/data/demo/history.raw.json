@@ -1,0 +1,2122 @@
+[
+ {
+  "time_utc": "2026-10-15T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 63,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 117,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 74,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.3,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-15T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 54.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 63,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 119,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 76,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.6,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 84,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-16T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 54.7,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 65,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 115,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 75,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 96,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.2,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-17T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 55.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 62,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 120,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 77,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 88,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 5,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 90,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-18T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 55.7,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 112,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 76,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 99,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-19T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 56.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 115,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 73,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 95,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.3,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 86,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-20T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 56.6,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 114,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 100,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.4,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 85,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-21T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 57.1,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 114,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 92,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.6,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 5,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 82,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-22T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 57.6,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 64,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 113,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 76,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 95,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.4,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 87,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-23T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 58.1,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 114,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 74,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 92,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.6,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 89,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-24T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 58.6,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 62,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 115,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 75,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 89,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 5,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 84,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-25T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 59,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 118,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 89,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.3,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 82,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-26T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 59.5,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 64,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 115,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.2,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-27T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 60,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 60,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 119,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 73,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 84,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-28T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 60.5,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 59,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 117,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 95,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 89,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-29T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 61,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 63,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 117,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.4,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 83,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-30T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 61.4,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 64,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 113,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 74,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 93,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 5,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 89,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-10-31T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 61.9,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 60,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 120,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 73,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 88,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.4,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 86,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-01T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 62.4,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 63,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 119,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 76,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 99,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.4,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 5,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 82,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-02T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 62.9,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 62,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 119,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 77,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 93,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.3,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 4,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-03T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 63.4,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 60,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 116,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 75,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 93,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7.2,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 87,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-04T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 63.8,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 62,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 113,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 72,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 97,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 7,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 88,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-05T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 64.3,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 113,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 71,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 94,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 6.7,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 75,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-06T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 64.8,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 114,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 74,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 89,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 6.5,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 70,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-07T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 65.3,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 59,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 113,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 76,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 91,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 6.2,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 80,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-08T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 65.8,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 116,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 74,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 98,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 37.1,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 6,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 2,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 60,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-09T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 66.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 63,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 118,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 75,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 99,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T07:35:00.000Z",
+  "metric": "TEMP",
+  "value": 36.9,
+  "unit": "°C",
+  "source": "oral thermometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 5.8,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 72,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-10T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 66.7,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 138,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 88,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 97,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 5.9,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 64,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-11T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 67.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 61,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 140,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 90,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 96,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 5.7,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T21:00:00.000Z",
+  "metric": "MOOD",
+  "value": 3,
+  "unit": "/5",
+  "source": "self-report",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T15:00:00.000Z",
+  "metric": "EX_MIN",
+  "value": 70,
+  "unit": "min",
+  "source": "ARED + CEVIS log",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-12T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 67.7,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T07:30:00.000Z",
+  "metric": "HR_REST",
+  "value": 64,
+  "unit": "bpm",
+  "source": "wrist sensor",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T07:40:00.000Z",
+  "metric": "BP_SYS",
+  "value": 142,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T07:40:00.000Z",
+  "metric": "BP_DIA",
+  "value": 92,
+  "unit": "mmHg",
+  "source": "manual",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T08:00:00.000Z",
+  "metric": "GLU",
+  "value": 96,
+  "unit": "mg/dL",
+  "source": "glucometer",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T06:30:00.000Z",
+  "metric": "SLEEP",
+  "value": 5.8,
+  "unit": "h",
+  "source": "actigraphy",
+  "provenance": "simulated"
+ },
+ {
+  "time_utc": "2026-11-13T00:05:00.000Z",
+  "metric": "RAD_CUM",
+  "value": 68.2,
+  "unit": "mSv",
+  "source": "mission dosimetry (simulated)",
+  "provenance": "simulated"
+ }
+]

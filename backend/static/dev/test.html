@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>test</title>
+</head>
+<body>
+<h1>test — ASTRA backend</h1>
+<p>صفحة اختبار مؤقتة بدون تصميم. ليست تشخيصاً طبياً. (الكاميرا تعمل فقط على localhost أو https)</p>
+
+<h2>1) فحص العين بالكاميرا</h2>
+<p>
+  رائد الفضاء: <select id="who"></select>
+  المدة: <select id="dur"><option value="12">12 ثانية</option><option value="20">20 ثانية</option><option value="30" selected>30 ثانية</option></select>
+  <button id="go" disabled>جارٍ تحميل النموذج...</button>
+  <button id="synth">اختبار بدون كاميرا (بيانات اصطناعية)</button>
+</p>
+<p id="status">الحالة: بانتظار تحميل النموذج</p>
+<p>تقدّم: <progress id="prog" max="100" value="0"></progress></p>
+<video id="v" autoplay playsinline muted width="480" style="transform:scaleX(-1)"></video>
+<canvas id="c" hidden></canvas>
+
+<h3>الملخص (ماذا في العين؟)</h3>
+<pre id="summary">-</pre>
+<h3>النتيجة الكاملة JSON</h3>
+<pre id="raw">-</pre>
+
+<h2>2) بقية ميزات الباك اند</h2>
+<p>
+  <button data-get="/api/health">health</button>
+  <button data-get="/api/astronauts">astronauts</button>
+  <button data-get="/api/indicators">indicators</button>
+  <button data-get="/api/alerts" data-aid="1">alerts (الرائد المحدد)</button>
+  <button data-get="/api/events" data-aid="1">events (الرائد المحدد)</button>
+  <button data-get="/api/routines" data-aid="1">routines (الرائد المحدد)</button>
+  <button data-get="/api/evidence">evidence</button>
+  <button data-get="/api/environment/model">environment/model</button>
+  <button data-get="/api/eye/model">eye/model</button>
+  <button id="ov">overview (الرائد المحدد)</button>
+  <button id="eh">eye/history (الرائد المحدد)</button>
+</p>
+<p>
+  تقييم بيئة: <select id="par"><option>co2</option><option>cabin_temp</option><option>humidity</option></select>
+  قيمة: <input id="val" type="number" value="7000" step="any">
+  <button id="as">assess</button>
+</p>
+<pre id="out">-</pre>
+
+<script type="module">
+import {FaceLandmarker, FilesetResolver} from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/vision_bundle.mjs";
+const $ = id => document.getElementById(id);
+const FIX_MS = 8000, STILL_AT = 15000, FPS = 15;
+const IDX = [33,160,158,133,153,144,468,469,470,471,472, 362,385,387,263,373,380,473,474,475,476,477];
+let lm = null, busy = false;
+
+const show = (el, v) => { $(el).textContent = typeof v === "string" ? v : JSON.stringify(v, null, 2); };
+async function api(path, body) {
+  const opt = body === undefined ? {} : {method: "POST", headers: {"content-type": "application/json"}, body: JSON.stringify(body)};
+  const r = await fetch(path, opt);
+  let j; try { j = await r.json(); } catch { j = {detail: "no JSON body"}; }
+  return {ok: r.ok, status: r.status, j};
+}
+const aid = () => +$("who").value;
+
+api("/api/astronauts").then(({j}) => {
+  $("who").innerHTML = "";
+  for (const a of j) { const o = document.createElement("option"); o.value = a.id; o.textContent = a.display_name; $("who").appendChild(o); }
+}).catch(e => show("out", "تعذر جلب الرواد: " + e));
+
+try {
+  const fs = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.3/wasm");
+  lm = await FaceLandmarker.createFromOptions(fs, {
+    baseOptions: {modelAssetPath: "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task"},
+    runningMode: "VIDEO", numFaces: 1, outputFaceBlendshapes: true});
+  $("go").disabled = false; $("go").textContent = "ابدأ الفحص";
+  $("status").textContent = "الحالة: النموذج جاهز";
+} catch (e) { $("status").textContent = "الحالة: تعذر تحميل النموذج (يحتاج إنترنت): " + e; $("go").textContent = "غير متاح"; }
+
+function pts(res, W, H) { const l = res.faceLandmarks[0], o = []; for (const i of IDX) o.push(l[i].x * W, l[i].y * H); return o; }
+function blink(res) { let a = 0, b = 0; for (const k of res.faceBlendshapes[0].categories) { if (k.categoryName === "eyeBlinkLeft") a = k.score; if (k.categoryName === "eyeBlinkRight") b = k.score; } return [a, b]; }
+
+function render(res) {
+  if (!res.ok) { show("summary", "فشل (" + res.status + "): " + (res.j.detail || "")); show("raw", res.j); return; }
+  const j = res.j, m = j.metrics, L = [];
+  L.push("الحالة: " + j.status + "   درجة الإرهاق: " + j.fatigue_score + "/100");
+  L.push("");
+  L.push("القواعد التي انطلقت:");
+  if (!j.rules_fired.length) L.push("  - لا شيء");
+  for (const r of j.rules_fired) L.push("  - " + r.rule + ": " + r.measured + " (الحد " + r.threshold + ") +" + r.points + " [" + r.source + "]");
+  L.push("");
+  L.push("العلامات الظاهرة / الخلل المحتمل (ثقة منخفضة):");
+  if (!j.visible_signs.length) L.push("  - لا شيء");
+  for (const s of j.visible_signs) L.push("  - " + s.sign + ": " + s.measured + " (الحد " + s.threshold + ") → " + s.suggested_action);
+  L.push("");
+  L.push("PERCLOS: " + (m.perclos * 100).toFixed(1) + "%   معدل الرمش: " + m.blink_rate_per_min + "/د   غفوات: " + m.microsleeps);
+  L.push("انحراف (vergence): " + m.vergence_index + "   فرق الارتفاع: " + m.vertical_offset);
+  L.push("عدم تماثل الجفنين: " + m.eyelid_asymmetry + "   نسبة القزحية: " + m.iris_size_ratio);
+  L.push("لون بياض العين: " + (typeof m.sclera_lab === "string" ? m.sclera_lab : JSON.stringify(m.sclera_lab)));
+  L.push("خط الأساس: " + (typeof j.baseline === "string" ? j.baseline : JSON.stringify(j.baseline)));
+  L.push("النوم المسجل: " + (typeof j.logged_sleep_hours === "string" ? j.logged_sleep_hours : JSON.stringify(j.logged_sleep_hours)));
+  L.push("");
+  L.push(j.disclaimer);
+  show("summary", L.join("\n")); show("raw", j);
+}
+
+$("go").onclick = async () => {
+  if (busy || !lm) return; busy = true; $("go").disabled = true;
+  show("summary", "-"); show("raw", "-");
+  const v = $("v"), DURATION = +$("dur").value * 1000;
+  try { v.srcObject = await navigator.mediaDevices.getUserMedia({video: {width: 1280, height: 720, facingMode: "user"}, audio: false}); }
+  catch (e) { $("status").textContent = "الحالة: لا يمكن فتح الكاميرا: " + e; busy = false; $("go").disabled = false; return; }
+  await v.play();
+  const W = v.videoWidth, H = v.videoHeight, frames = [];
+  let attempted = 0, still = null, stillPts = null; const t0 = performance.now();
+  $("status").textContent = "الحالة: انظر للكاميرا مباشرة ورمّش بشكل طبيعي...";
+  await new Promise(done => {
+    const tick = () => {
+      const t = performance.now() - t0; $("prog").value = Math.min(100, t / DURATION * 100);
+      if (t >= DURATION) { done(); return; }
+      attempted++;
+      try {
+        const res = lm.detectForVideo(v, performance.now());
+        if (res.faceLandmarks.length && res.faceBlendshapes.length) {
+          const p = pts(res, W, H), b = blink(res); frames.push({t: Math.round(t), bl: b, pts: p});
+          $("status").textContent = "الحالة: وجه مكتشف · إطارات " + frames.length + "/" + attempted + " · رمش " + b[0].toFixed(2) + "/" + b[1].toFixed(2);
+          if (!still && t >= Math.min(STILL_AT, DURATION / 2) && b[0] < 0.2 && b[1] < 0.2) {
+            const c = $("c"); c.width = W; c.height = H; c.getContext("2d").drawImage(v, 0, 0, W, H);
+            still = c.toDataURL("image/jpeg", 0.92); stillPts = p;
+          }
+        } else { $("status").textContent = "الحالة: لا يوجد وجه في الصورة · إطارات " + frames.length + "/" + attempted; }
+      } catch (e) {}
+      setTimeout(tick, 1000 / FPS);
+    }; tick();
+  });
+  v.srcObject.getTracks().forEach(t => t.stop());
+  $("status").textContent = "الحالة: جارٍ التحليل... (إطارات " + frames.length + " من " + attempted + ", صورة ثابتة: " + (still ? "نعم" : "لا") + ")";
+  render(await api("/api/eye/analyze", {astronaut_id: aid(), frames, attempted, fixation_from_ms: 0, fixation_to_ms: FIX_MS, still_jpeg_b64: still, still_pts: stillPts}));
+  $("status").textContent = "الحالة: انتهى"; $("go").disabled = false; busy = false;
+};
+
+// synthetic frontal face (same geometry as the Rust unit tests) to test the pipeline without a camera
+function face(open, na, nb) {
+  const w = 60, p = new Array(44).fill(0), h = open * w / 2;
+  const s = (i, x, y) => { p[2 * i] = x; p[2 * i + 1] = y; };
+  for (const [base, ox, outerFirst] of [[0, 100, true], [11, 240, false]]) {
+    const co = outerFirst ? ox : ox + w, ci = outerFirst ? ox + w : ox;
+    s(base, outerFirst ? co : ci, 200); s(base + 3, outerFirst ? ci : co, 200);
+    s(base + 1, ox + .33 * w, 200 - h); s(base + 2, ox + .66 * w, 200 - h);
+    s(base + 5, ox + .33 * w, 200 + h); s(base + 4, ox + .66 * w, 200 + h);
+    const ix = co + (ci - co) * (outerFirst ? na : nb); s(base + 6, ix, 200);
+    [[-6, 0], [6, 0], [0, -6], [0, 6]].forEach(([dx, dy], k) => s(base + 7 + k, ix + dx, 200 + dy));
+  }
+  return p;
+}
+$("synth").onclick = async () => {
+  const frames = [];
+  for (let i = 0; i < 450; i++) { const t = i * 1000 / 15, c = (t % 6000) < 1200; frames.push({t, bl: c ? [.95, .95] : [.05, .05], pts: face(c ? .05 : .3, .5, .5)}); }
+  $("status").textContent = "الحالة: أُرسلت بيانات اصطناعية (نعاس) للتحقق من الباك اند فقط";
+  render(await api("/api/eye/analyze", {astronaut_id: aid(), frames, attempted: 450, fixation_from_ms: 0, fixation_to_ms: 8000}));
+};
+
+async function get(path) { const r = await api(path); show("out", "GET " + path + "  →  " + r.status + "\n" + JSON.stringify(r.j, null, 2)); }
+document.querySelectorAll("button[data-get]").forEach(b => b.onclick = () => get(b.dataset.get + (b.dataset.aid ? "?astronaut_id=" + aid() : "")));
+$("ov").onclick = () => get("/api/overview/" + aid());
+$("eh").onclick = () => get("/api/eye/history?astronaut_id=" + aid());
+$("as").onclick = () => get("/api/environment/assess?parameter=" + $("par").value + "&value=" + encodeURIComponent($("val").value));
+</script>
+</body>
+</html>

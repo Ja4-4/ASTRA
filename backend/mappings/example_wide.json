@@ -1,0 +1,20 @@
+{
+  "_comment": "EXAMPLE ONLY. Copy this file and edit the column names after inspecting the real challenge CSV (python -m scripts.inspect_csv).",
+  "source_name": "Example wide-format file",
+  "source_type": "imported",
+  "format": "wide",
+  "timestamp_col": "Timestamp",
+  "astronaut_col": "Subject",
+  "default_astronaut": "subject_1",
+  "mission_setting": "station",
+  "wide": {
+    "columns": {
+      "HR (bpm)":        {"indicator": "heart_rate",   "unit": "bpm"},
+      "SBP":             {"indicator": "bp_systolic",  "unit": "mmHg"},
+      "DBP":             {"indicator": "bp_diastolic", "unit": "mmHg"},
+      "Glucose mmol/L":  {"indicator": "glucose",      "unit": "mmol/L"},
+      "Temp F":          {"indicator": "body_temp",    "unit": "F"},
+      "Sleep (min)":     {"indicator": "sleep_hours",  "unit": "min"}
+    }
+  }
+}

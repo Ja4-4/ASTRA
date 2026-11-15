@@ -1,0 +1,2972 @@
+{
+  "version": 2,
+  "_note": "Registry v2: every ASTRA backend feature is one action. kind=read runs at once, kind=write needs the user to confirm, kind=ui is carried out by the frontend. Training only reads name/description/args/templates/reply/missing/clarify; exec/ui/keywords are used by backend/src/atlas.rs. Rerun make_atlas_data.py and train_stage2.py after any change to names, args or templates.",
+  "actions": [
+    {
+      "name": "show_overview",
+      "kind": "read",
+      "description": "Show the astronaut's overall health overview: latest card per indicator, open alerts, routines due",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض ملخص حالتي الصحية",
+          "كيف حالتي الصحية اليوم",
+          "وريني نظرة عامة على قياساتي",
+          "ابغى ملخص الحالة",
+          "أعطني ملخصاً لكل المؤشرات",
+          "كيف وضعي الصحي الحين"
+        ],
+        "en": [
+          "show my health overview",
+          "how am I doing today",
+          "give me a summary of my status",
+          "what's my overall status",
+          "show me the overview",
+          "give me a summary of all my indicators"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "هذا ملخص حالتك الصحية.",
+        "en": "Here is your health overview."
+      },
+      "keywords": {
+        "ar": [
+          "ملخص",
+          "نظرة عامة",
+          "حالتي",
+          "وضعي",
+          "كيف حالي"
+        ],
+        "en": [
+          "overview",
+          "summary",
+          "how am i doing",
+          "status",
+          "dashboard"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/overview/{$astronaut}"
+      }
+    },
+    {
+      "name": "get_latest",
+      "kind": "read",
+      "description": "Read the latest value of one health indicator",
+      "args": {
+        "indicator": {
+          "kind": "enum",
+          "values": {
+            "heart_rate": {
+              "ar": [
+                "معدل ضربات القلب",
+                "النبض"
+              ],
+              "en": [
+                "heart rate",
+                "pulse"
+              ]
+            },
+            "bp_systolic": {
+              "ar": [
+                "الضغط الانقباضي",
+                "ضغط الدم الانقباضي"
+              ],
+              "en": [
+                "systolic blood pressure",
+                "systolic pressure"
+              ]
+            },
+            "bp_diastolic": {
+              "ar": [
+                "الضغط الانبساطي",
+                "ضغط الدم الانبساطي"
+              ],
+              "en": [
+                "diastolic blood pressure",
+                "diastolic pressure"
+              ]
+            },
+            "glucose": {
+              "ar": [
+                "سكر الدم",
+                "الجلوكوز"
+              ],
+              "en": [
+                "blood glucose",
+                "blood sugar"
+              ]
+            },
+            "body_temp": {
+              "ar": [
+                "حرارة الجسم",
+                "درجة الحرارة"
+              ],
+              "en": [
+                "body temperature",
+                "temperature"
+              ]
+            },
+            "spo2": {
+              "ar": [
+                "تشبع الأكسجين",
+                "الأكسجين في الدم"
+              ],
+              "en": [
+                "oxygen saturation",
+                "SpO2"
+              ]
+            },
+            "sleep_hours": {
+              "ar": [
+                "ساعات النوم",
+                "مدة النوم"
+              ],
+              "en": [
+                "sleep hours",
+                "hours of sleep"
+              ]
+            },
+            "mood": {
+              "ar": [
+                "المزاج",
+                "حالتي المزاجية"
+              ],
+              "en": [
+                "mood",
+                "my mood score"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "كم آخر قراءة لـ{indicator}",
+          "ما هي قيمة {indicator} الحالية",
+          "وش آخر قياس لـ{indicator}",
+          "كم {indicator} عندي",
+          "أعطني آخر قياس لـ{indicator}",
+          "ابغى أعرف {indicator} الأخير"
+        ],
+        "en": [
+          "what's my latest {indicator}",
+          "show the last {indicator} reading",
+          "what is my current {indicator}",
+          "how is my {indicator}",
+          "latest {indicator} please",
+          "check my {indicator}"
+        ],
+        "mixed_ar": [
+          "كم آخر قراءة لـ{indicator}",
+          "وش آخر قياس لـ{indicator}"
+        ],
+        "mixed_en": [
+          "what's my latest {indicator}",
+          "check my {indicator}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، هذه آخر قراءة لـ{indicator}.",
+        "en": "Sure, here is the latest {indicator}."
+      },
+      "keywords": {
+        "ar": [
+          "آخر قراءة",
+          "آخر قياس",
+          "كم",
+          "قيمة",
+          "الحالية"
+        ],
+        "en": [
+          "latest",
+          "last reading",
+          "current",
+          "what is my",
+          "check my"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/measurements",
+        "query": {
+          "astronaut_id": "$astronaut",
+          "indicator_code": "{indicator}",
+          "limit": "1"
+        }
+      }
+    },
+    {
+      "name": "show_trend",
+      "kind": "read",
+      "description": "Show how one health indicator changed over a period",
+      "args": {
+        "indicator": {
+          "kind": "enum",
+          "values": {
+            "heart_rate": {
+              "ar": [
+                "معدل ضربات القلب",
+                "النبض"
+              ],
+              "en": [
+                "heart rate",
+                "pulse"
+              ]
+            },
+            "bp_systolic": {
+              "ar": [
+                "الضغط الانقباضي",
+                "ضغط الدم الانقباضي"
+              ],
+              "en": [
+                "systolic blood pressure",
+                "systolic pressure"
+              ]
+            },
+            "bp_diastolic": {
+              "ar": [
+                "الضغط الانبساطي",
+                "ضغط الدم الانبساطي"
+              ],
+              "en": [
+                "diastolic blood pressure",
+                "diastolic pressure"
+              ]
+            },
+            "glucose": {
+              "ar": [
+                "سكر الدم",
+                "الجلوكوز"
+              ],
+              "en": [
+                "blood glucose",
+                "blood sugar"
+              ]
+            },
+            "body_temp": {
+              "ar": [
+                "حرارة الجسم",
+                "درجة الحرارة"
+              ],
+              "en": [
+                "body temperature",
+                "temperature"
+              ]
+            },
+            "spo2": {
+              "ar": [
+                "تشبع الأكسجين",
+                "الأكسجين في الدم"
+              ],
+              "en": [
+                "oxygen saturation",
+                "SpO2"
+              ]
+            },
+            "sleep_hours": {
+              "ar": [
+                "ساعات النوم",
+                "مدة النوم"
+              ],
+              "en": [
+                "sleep hours",
+                "hours of sleep"
+              ]
+            },
+            "mood": {
+              "ar": [
+                "المزاج",
+                "حالتي المزاجية"
+              ],
+              "en": [
+                "mood",
+                "my mood score"
+              ]
+            }
+          }
+        },
+        "period": {
+          "kind": "enum",
+          "values": {
+            "day": {
+              "ar": [
+                "آخر ٢٤ ساعة",
+                "اليوم الماضي"
+              ],
+              "en": [
+                "the last 24 hours",
+                "the past day"
+              ]
+            },
+            "week": {
+              "ar": [
+                "آخر أسبوع",
+                "الأسبوع الماضي"
+              ],
+              "en": [
+                "the last week",
+                "the past week"
+              ]
+            },
+            "two_weeks": {
+              "ar": [
+                "آخر أسبوعين",
+                "الأسبوعين الماضيين"
+              ],
+              "en": [
+                "the last two weeks",
+                "the past two weeks"
+              ]
+            },
+            "month": {
+              "ar": [
+                "آخر شهر",
+                "الشهر الماضي"
+              ],
+              "en": [
+                "the last month",
+                "the past month"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "اعرض اتجاه {indicator} خلال {period}",
+          "كيف تغيّر {indicator} خلال {period}",
+          "وريني منحنى {indicator} خلال {period}",
+          "ابغى أشوف تطور {indicator} خلال {period}",
+          "حلّل اتجاه {indicator} خلال {period}",
+          "ارسم لي {indicator} خلال {period}"
+        ],
+        "en": [
+          "show the trend of {indicator} over {period}",
+          "how did {indicator} change over {period}",
+          "plot my {indicator} over {period}",
+          "I want to see {indicator} over {period}",
+          "give me the {indicator} trend for {period}",
+          "chart {indicator} for {period}"
+        ],
+        "mixed_ar": [
+          "اعرض اتجاه {indicator} خلال {period}",
+          "وريني منحنى {indicator} خلال {period}"
+        ],
+        "mixed_en": [
+          "show the trend of {indicator} over {period}",
+          "plot my {indicator} over {period}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، هذا اتجاه {indicator} خلال {period}.",
+        "en": "Here is the trend of {indicator} over {period}."
+      },
+      "keywords": {
+        "ar": [
+          "اتجاه",
+          "منحنى",
+          "تغير",
+          "تطور",
+          "رسم"
+        ],
+        "en": [
+          "trend",
+          "plot",
+          "chart",
+          "change over",
+          "over time"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/trends",
+        "query": {
+          "astronaut_id": "$astronaut",
+          "indicator_code": "{indicator}",
+          "days": "{period}"
+        },
+        "map": {
+          "period": {
+            "day": "1",
+            "week": "7",
+            "two_weeks": "14",
+            "month": "30"
+          }
+        }
+      }
+    },
+    {
+      "name": "list_alerts",
+      "kind": "read",
+      "description": "List the open health alerts",
+      "args": {},
+      "templates": {
+        "ar": [
+          "هل عندي تنبيهات؟",
+          "اعرض التنبيهات المفتوحة",
+          "وش التنبيهات الحالية",
+          "ابغى أشوف التنبيهات",
+          "في أي تنبيه عليّ؟",
+          "اعرض لي تنبيهاتي"
+        ],
+        "en": [
+          "do I have any alerts",
+          "show my open alerts",
+          "what alerts are active",
+          "list the alerts",
+          "any warnings for me",
+          "show me my alerts"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذه تنبيهاتك المفتوحة.",
+        "en": "Here are your open alerts."
+      },
+      "keywords": {
+        "ar": [
+          "تنبيهات",
+          "تنبيه",
+          "تحذير",
+          "إنذار"
+        ],
+        "en": [
+          "alerts",
+          "alert",
+          "warnings",
+          "warning"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/alerts",
+        "query": {
+          "astronaut_id": "$astronaut",
+          "status": "open"
+        }
+      }
+    },
+    {
+      "name": "alert_history",
+      "kind": "read",
+      "description": "List alerts by status: acknowledged or resolved",
+      "args": {
+        "status": {
+          "kind": "enum",
+          "values": {
+            "acknowledged": {
+              "ar": [
+                "المؤكدة",
+                "التي تم الاطلاع عليها"
+              ],
+              "en": [
+                "acknowledged",
+                "already acknowledged"
+              ]
+            },
+            "resolved": {
+              "ar": [
+                "المحلولة",
+                "المغلقة"
+              ],
+              "en": [
+                "resolved",
+                "closed"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "اعرض التنبيهات {status}",
+          "وريني التنبيهات {status}",
+          "ابغى سجل التنبيهات {status}",
+          "هات التنبيهات {status}",
+          "اعرض لي كل التنبيهات {status}",
+          "أريد قائمة التنبيهات {status}"
+        ],
+        "en": [
+          "show the {status} alerts",
+          "list {status} alerts",
+          "I want to see the {status} alerts",
+          "pull up the {status} alerts",
+          "give me all {status} alerts",
+          "show me alerts that are {status}"
+        ],
+        "mixed_ar": [
+          "اعرض التنبيهات {status}"
+        ],
+        "mixed_en": [
+          "show the {status} alerts"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، هذه التنبيهات {status}.",
+        "en": "Here are the {status} alerts."
+      },
+      "keywords": {
+        "ar": [
+          "سجل التنبيهات",
+          "التنبيهات القديمة",
+          "المحلولة",
+          "المؤكدة"
+        ],
+        "en": [
+          "alert history",
+          "resolved",
+          "acknowledged",
+          "old alerts"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/alerts",
+        "query": {
+          "astronaut_id": "$astronaut",
+          "status": "{status}"
+        }
+      }
+    },
+    {
+      "name": "list_events",
+      "kind": "read",
+      "description": "List the tracked health events (recovery tracking)",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض أحداثي الصحية",
+          "وش الأحداث المسجلة عندي",
+          "ابغى سجل الأحداث",
+          "وريني الأحداث الصحية",
+          "هل في أحداث متابعة",
+          "اعرض لي أحداث التعافي"
+        ],
+        "en": [
+          "show my health events",
+          "list my events",
+          "what events are being tracked",
+          "show the recovery events",
+          "give me my event log",
+          "do I have any open events"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذه أحداثك الصحية.",
+        "en": "Here are your health events."
+      },
+      "keywords": {
+        "ar": [
+          "أحداث",
+          "حدث",
+          "تعافي",
+          "متابعة"
+        ],
+        "en": [
+          "events",
+          "event log",
+          "recovery"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/events",
+        "query": {
+          "astronaut_id": "$astronaut"
+        }
+      }
+    },
+    {
+      "name": "show_event",
+      "kind": "read",
+      "description": "Show one health event with its recovery follow-ups",
+      "args": {
+        "event_id": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ],
+            "en": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ]
+          },
+          "type": "int"
+        }
+      },
+      "templates": {
+        "ar": [
+          "اعرض الحدث رقم {event_id}",
+          "وريني تفاصيل الحدث {event_id}",
+          "ابغى أشوف الحدث رقم {event_id}",
+          "افتح الحدث {event_id}",
+          "هات ملخص التعافي للحدث {event_id}",
+          "ما حالة الحدث رقم {event_id}"
+        ],
+        "en": [
+          "show event number {event_id}",
+          "open the details of event {event_id}",
+          "I want to see event {event_id}",
+          "pull up event {event_id}",
+          "give me the recovery summary for event {event_id}",
+          "what's the status of event {event_id}"
+        ],
+        "mixed_ar": [
+          "اعرض الحدث رقم {event_id}"
+        ],
+        "mixed_en": [
+          "show event number {event_id}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، هذه تفاصيل الحدث {event_id}.",
+        "en": "Here are the details of event {event_id}."
+      },
+      "keywords": {
+        "ar": [
+          "تفاصيل الحدث",
+          "الحدث رقم"
+        ],
+        "en": [
+          "event number",
+          "event details"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/events/{event_id}",
+        "owns": {
+          "table": "events",
+          "arg": "event_id"
+        }
+      },
+      "missing": {
+        "ar": [
+          "اعرض الحدث",
+          "ابغى تفاصيل حدث"
+        ],
+        "en": [
+          "show an event",
+          "I want event details"
+        ]
+      },
+      "clarify": {
+        "ar": "ما رقم الحدث؟",
+        "en": "Which event number?"
+      }
+    },
+    {
+      "name": "list_routines",
+      "kind": "read",
+      "description": "List the approved routines and which are due",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض روتيني اليومي",
+          "هل عندي مهام روتينية مستحقة",
+          "وش الروتين المطلوب مني",
+          "ابغى أشوف الروتين",
+          "وريني مهامي الدورية",
+          "هل في روتين متأخر"
+        ],
+        "en": [
+          "show my routines",
+          "which routines are due",
+          "what's my daily routine",
+          "list my routine tasks",
+          "do I have any routine overdue",
+          "show me my scheduled routines"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذا روتينك.",
+        "en": "Here are your routines."
+      },
+      "keywords": {
+        "ar": [
+          "روتين",
+          "مهام",
+          "مستحق",
+          "دورية"
+        ],
+        "en": [
+          "routine",
+          "routines",
+          "due",
+          "tasks"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/routines",
+        "query": {
+          "astronaut_id": "$astronaut"
+        }
+      }
+    },
+    {
+      "name": "env_latest",
+      "kind": "read",
+      "description": "Show the latest environment reading of one parameter",
+      "args": {
+        "parameter": {
+          "kind": "enum",
+          "values": {
+            "co2": {
+              "ar": [
+                "ثاني أكسيد الكربون",
+                "نسبة CO2"
+              ],
+              "en": [
+                "carbon dioxide",
+                "CO2"
+              ]
+            },
+            "cabin_temp": {
+              "ar": [
+                "حرارة المقصورة",
+                "درجة حرارة المقصورة"
+              ],
+              "en": [
+                "cabin temperature",
+                "cabin temp"
+              ]
+            },
+            "humidity": {
+              "ar": [
+                "الرطوبة",
+                "نسبة الرطوبة"
+              ],
+              "en": [
+                "humidity",
+                "the humidity level"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "كم {parameter} الآن",
+          "ما قراءة {parameter} الحالية",
+          "وش آخر قياس لـ{parameter}",
+          "اعرض لي {parameter}",
+          "ابغى أعرف {parameter}",
+          "كم تبلغ {parameter}"
+        ],
+        "en": [
+          "what is the {parameter} now",
+          "show the latest {parameter}",
+          "what's the current {parameter}",
+          "check the {parameter}",
+          "how is the {parameter}",
+          "read me the {parameter}"
+        ],
+        "mixed_ar": [
+          "كم {parameter} الآن",
+          "اعرض لي {parameter}"
+        ],
+        "mixed_en": [
+          "what is the {parameter} now",
+          "check the {parameter}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، هذه قراءة {parameter}.",
+        "en": "Here is the latest {parameter}."
+      },
+      "keywords": {
+        "ar": [
+          "المقصورة",
+          "البيئة",
+          "الرطوبة",
+          "الكربون"
+        ],
+        "en": [
+          "cabin",
+          "environment",
+          "humidity",
+          "carbon dioxide",
+          "co2"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/environment",
+        "query": {
+          "parameter": "{parameter}",
+          "limit": "1"
+        }
+      }
+    },
+    {
+      "name": "assess_env",
+      "kind": "read",
+      "description": "Assess an environment value against the trained baseline",
+      "args": {
+        "parameter": {
+          "kind": "enum",
+          "values": {
+            "co2": {
+              "ar": [
+                "ثاني أكسيد الكربون",
+                "نسبة CO2"
+              ],
+              "en": [
+                "carbon dioxide",
+                "CO2"
+              ]
+            },
+            "cabin_temp": {
+              "ar": [
+                "حرارة المقصورة",
+                "درجة حرارة المقصورة"
+              ],
+              "en": [
+                "cabin temperature",
+                "cabin temp"
+              ]
+            },
+            "humidity": {
+              "ar": [
+                "الرطوبة",
+                "نسبة الرطوبة"
+              ],
+              "en": [
+                "humidity",
+                "the humidity level"
+              ]
+            }
+          }
+        },
+        "value": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "72",
+              "98",
+              "120",
+              "5.5",
+              "36.6",
+              "85",
+              "140",
+              "95"
+            ],
+            "en": [
+              "72",
+              "98",
+              "120",
+              "5.5",
+              "36.6",
+              "85",
+              "140",
+              "95"
+            ]
+          },
+          "type": "number"
+        }
+      },
+      "templates": {
+        "ar": [
+          "قيّم {parameter} بقيمة {value}",
+          "هل {value} طبيعي لـ{parameter}",
+          "قارن {parameter} {value} بالمرجع",
+          "ابغى تقييم {parameter} عند {value}",
+          "هل {parameter} عند {value} آمن",
+          "افحص {parameter} إذا كان {value}"
+        ],
+        "en": [
+          "assess {parameter} at {value}",
+          "is {value} normal for {parameter}",
+          "compare {parameter} {value} with the baseline",
+          "I want an assessment of {parameter} at {value}",
+          "is {parameter} at {value} safe",
+          "check {parameter} if it is {value}"
+        ],
+        "mixed_ar": [
+          "قيّم {parameter} بقيمة {value}"
+        ],
+        "mixed_en": [
+          "assess {parameter} at {value}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأقيّم {parameter} عند {value}.",
+        "en": "Okay, assessing {parameter} at {value}."
+      },
+      "keywords": {
+        "ar": [
+          "قيّم",
+          "تقييم",
+          "طبيعي",
+          "مرجع",
+          "آمن"
+        ],
+        "en": [
+          "assess",
+          "assessment",
+          "normal for",
+          "baseline",
+          "safe"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/environment/assess",
+        "query": {
+          "parameter": "{parameter}",
+          "value": "{value}"
+        }
+      },
+      "missing": {
+        "ar": [
+          "قيّم البيئة",
+          "ابغى تقييم للبيئة"
+        ],
+        "en": [
+          "assess the environment",
+          "I want an environment assessment"
+        ]
+      },
+      "clarify": {
+        "ar": "أي معامل بيئي وما قيمته؟",
+        "en": "Which environment parameter, and what value?"
+      }
+    },
+    {
+      "name": "env_model",
+      "kind": "read",
+      "description": "Show the environment baseline model and its validation",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض نموذج البيئة المرجعي",
+          "وش المراجع المستخدمة للبيئة",
+          "وريني حدود البيئة الطبيعية",
+          "ابغى أعرف كيف يُقيَّم الهواء",
+          "اعرض معلومات نموذج البيئة",
+          "هات حدود المقصورة المرجعية"
+        ],
+        "en": [
+          "show the environment baseline model",
+          "what baselines does the environment use",
+          "show me the normal environment ranges",
+          "how is the cabin air assessed",
+          "show the environment model info",
+          "give me the reference limits for the cabin"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذا نموذج البيئة المرجعي.",
+        "en": "Here is the environment baseline model."
+      },
+      "keywords": {
+        "ar": [
+          "نموذج البيئة",
+          "المراجع",
+          "حدود",
+          "المرجعي"
+        ],
+        "en": [
+          "environment model",
+          "baseline model",
+          "reference limits",
+          "ranges"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/environment/model"
+      }
+    },
+    {
+      "name": "show_evidence",
+      "kind": "read",
+      "description": "Show the scientific evidence sources behind the rules",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض المصادر العلمية",
+          "وريني مصادر الأدلة",
+          "وش المراجع الطبية للقواعد",
+          "ابغى أشوف الأدلة العلمية",
+          "اعرض لي المراجع",
+          "من أين جاءت هذه القواعد"
+        ],
+        "en": [
+          "show the evidence sources",
+          "list the scientific references",
+          "what sources back the rules",
+          "I want to see the evidence",
+          "show me the references",
+          "where do these rules come from"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذه المصادر العلمية.",
+        "en": "Here are the evidence sources."
+      },
+      "keywords": {
+        "ar": [
+          "المصادر",
+          "الأدلة",
+          "المراجع",
+          "علمية"
+        ],
+        "en": [
+          "evidence",
+          "sources",
+          "references",
+          "scientific"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/evidence"
+      }
+    },
+    {
+      "name": "list_astronauts",
+      "kind": "read",
+      "description": "List the astronauts (crew members) in the system",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض أفراد الطاقم",
+          "من هم رواد الفضاء المسجلون",
+          "وريني قائمة الرواد",
+          "كم عدد أفراد الطاقم",
+          "ابغى أشوف الطاقم كله",
+          "اعرض لي كل الرواد"
+        ],
+        "en": [
+          "list the crew",
+          "who is in the crew",
+          "show all astronauts",
+          "how many crew members are there",
+          "I want to see the whole crew",
+          "show me every astronaut"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذا الطاقم.",
+        "en": "Here is the crew."
+      },
+      "keywords": {
+        "ar": [
+          "الطاقم",
+          "رواد",
+          "رائد",
+          "أفراد"
+        ],
+        "en": [
+          "crew",
+          "astronauts",
+          "astronaut",
+          "members"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/astronauts"
+      }
+    },
+    {
+      "name": "list_import_files",
+      "kind": "read",
+      "description": "List the data files and mappings available for import",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض ملفات الاستيراد المتاحة",
+          "وش ملفات البيانات اللي أقدر أستوردها",
+          "وريني ملفات CSV",
+          "ابغى قائمة ملفات الاستيراد",
+          "ما الملفات الجاهزة للاستيراد",
+          "اعرض خرائط الاستيراد"
+        ],
+        "en": [
+          "list the import files",
+          "what data files can I import",
+          "show the CSV files",
+          "I want the list of import files",
+          "which files are ready to import",
+          "show the import mappings"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذه ملفات الاستيراد المتاحة.",
+        "en": "Here are the available import files."
+      },
+      "keywords": {
+        "ar": [
+          "ملفات",
+          "استيراد",
+          "CSV",
+          "خرائط"
+        ],
+        "en": [
+          "import files",
+          "csv",
+          "mappings",
+          "files"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/import/files"
+      }
+    },
+    {
+      "name": "import_log",
+      "kind": "read",
+      "description": "Show the history of data imports",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض سجل الاستيراد",
+          "وش آخر عمليات استيراد تمت",
+          "وريني تاريخ الاستيراد",
+          "ابغى سجل عمليات الاستيراد",
+          "هل تم استيراد شيء مؤخراً",
+          "اعرض لي سجل البيانات المستوردة"
+        ],
+        "en": [
+          "show the import log",
+          "what imports were done recently",
+          "show the import history",
+          "I want the log of imports",
+          "was anything imported lately",
+          "show me the imported data log"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذا سجل الاستيراد.",
+        "en": "Here is the import log."
+      },
+      "keywords": {
+        "ar": [
+          "سجل الاستيراد",
+          "عمليات استيراد",
+          "المستوردة"
+        ],
+        "en": [
+          "import log",
+          "import history",
+          "imported"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/import/log"
+      }
+    },
+    {
+      "name": "eye_history",
+      "kind": "read",
+      "description": "Show the history of eye scans",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض سجل فحوصات العين",
+          "وريني نتائج فحص العين السابقة",
+          "ابغى تاريخ فحص العين",
+          "هل أجريت فحص عين مؤخراً",
+          "اعرض لي فحوصات العين",
+          "وش آخر نتائج العين"
+        ],
+        "en": [
+          "show my eye scan history",
+          "show the previous eye scan results",
+          "I want my eye scan history",
+          "did I do an eye scan recently",
+          "list my eye scans",
+          "what were my last eye results"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذا سجل فحوصات العين.",
+        "en": "Here is your eye scan history."
+      },
+      "keywords": {
+        "ar": [
+          "فحص العين",
+          "العين",
+          "فحوصات"
+        ],
+        "en": [
+          "eye",
+          "eye scan",
+          "scans"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/eye/history",
+        "query": {
+          "astronaut_id": "$astronaut",
+          "limit": "10"
+        }
+      }
+    },
+    {
+      "name": "eye_model",
+      "kind": "read",
+      "description": "Show information about the eye analysis model",
+      "args": {},
+      "templates": {
+        "ar": [
+          "اعرض معلومات نموذج العين",
+          "وش نموذج فحص العين",
+          "كيف يعمل تحليل العين",
+          "ابغى تفاصيل نموذج العين",
+          "عرّفني بنموذج العين",
+          "اعرض دقة نموذج العين"
+        ],
+        "en": [
+          "show the eye model info",
+          "what is the eye scan model",
+          "how does the eye analysis work",
+          "I want details about the eye model",
+          "tell me about the eye model",
+          "show the accuracy of the eye model"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، هذه معلومات نموذج العين.",
+        "en": "Here is the eye model information."
+      },
+      "keywords": {
+        "ar": [
+          "نموذج العين",
+          "تحليل العين",
+          "دقة"
+        ],
+        "en": [
+          "eye model",
+          "eye analysis",
+          "accuracy"
+        ]
+      },
+      "exec": {
+        "method": "GET",
+        "path": "/api/eye/model"
+      }
+    },
+    {
+      "name": "log_measurement",
+      "kind": "write",
+      "description": "Record a new measurement for one health indicator (needs confirmation)",
+      "args": {
+        "indicator": {
+          "kind": "enum",
+          "values": {
+            "heart_rate": {
+              "ar": [
+                "معدل ضربات القلب",
+                "النبض"
+              ],
+              "en": [
+                "heart rate",
+                "pulse"
+              ]
+            },
+            "bp_systolic": {
+              "ar": [
+                "الضغط الانقباضي",
+                "ضغط الدم الانقباضي"
+              ],
+              "en": [
+                "systolic blood pressure",
+                "systolic pressure"
+              ]
+            },
+            "bp_diastolic": {
+              "ar": [
+                "الضغط الانبساطي",
+                "ضغط الدم الانبساطي"
+              ],
+              "en": [
+                "diastolic blood pressure",
+                "diastolic pressure"
+              ]
+            },
+            "glucose": {
+              "ar": [
+                "سكر الدم",
+                "الجلوكوز"
+              ],
+              "en": [
+                "blood glucose",
+                "blood sugar"
+              ]
+            },
+            "body_temp": {
+              "ar": [
+                "حرارة الجسم",
+                "درجة الحرارة"
+              ],
+              "en": [
+                "body temperature",
+                "temperature"
+              ]
+            },
+            "spo2": {
+              "ar": [
+                "تشبع الأكسجين",
+                "الأكسجين في الدم"
+              ],
+              "en": [
+                "oxygen saturation",
+                "SpO2"
+              ]
+            },
+            "sleep_hours": {
+              "ar": [
+                "ساعات النوم",
+                "مدة النوم"
+              ],
+              "en": [
+                "sleep hours",
+                "hours of sleep"
+              ]
+            },
+            "mood": {
+              "ar": [
+                "المزاج",
+                "حالتي المزاجية"
+              ],
+              "en": [
+                "mood",
+                "my mood score"
+              ]
+            }
+          }
+        },
+        "value": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "72",
+              "98",
+              "120",
+              "5.5",
+              "36.6",
+              "85",
+              "140",
+              "95"
+            ],
+            "en": [
+              "72",
+              "98",
+              "120",
+              "5.5",
+              "36.6",
+              "85",
+              "140",
+              "95"
+            ]
+          },
+          "type": "number"
+        }
+      },
+      "templates": {
+        "ar": [
+          "سجّل {indicator} بقيمة {value}",
+          "أضف قياس {indicator} وهو {value}",
+          "سجّل لي {indicator} {value}",
+          "ابغى أسجل {indicator} يساوي {value}",
+          "دوّن {indicator} عند {value}",
+          "قراءة {indicator} اليوم {value} سجّلها"
+        ],
+        "en": [
+          "log {indicator} at {value}",
+          "record my {indicator} as {value}",
+          "add a {indicator} measurement of {value}",
+          "save {indicator} {value}",
+          "my {indicator} is {value}, please log it",
+          "enter {indicator} equals {value}"
+        ],
+        "mixed_ar": [
+          "سجّل {indicator} بقيمة {value}",
+          "أضف قياس {indicator} وهو {value}"
+        ],
+        "mixed_en": [
+          "log {indicator} at {value}",
+          "record my {indicator} as {value}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأسجّل {indicator} بقيمة {value}. أحتاج تأكيدك.",
+        "en": "Okay, I'll log {indicator} at {value}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "سجّل",
+          "أضف قياس",
+          "دوّن",
+          "قراءة"
+        ],
+        "en": [
+          "log",
+          "record",
+          "add a measurement",
+          "enter",
+          "save"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/measurements",
+        "body": {
+          "astronaut_id": "$astronaut",
+          "indicator_code": "{indicator}",
+          "value": "{value}",
+          "unit": "$indicator_unit",
+          "source_type": "manual",
+          "source_name": "Atlas assistant"
+        },
+        "clock": "measured_at"
+      },
+      "missing": {
+        "ar": [
+          "سجّل قياس",
+          "ابغى أسجل قراءة",
+          "أضف قياس جديد"
+        ],
+        "en": [
+          "log a measurement",
+          "I want to record a reading",
+          "add a new measurement"
+        ]
+      },
+      "clarify": {
+        "ar": "أي مؤشر وما قيمته؟",
+        "en": "Which indicator, and what value?"
+      }
+    },
+    {
+      "name": "acknowledge_alert",
+      "kind": "write",
+      "description": "Acknowledge one alert by its number (needs confirmation)",
+      "args": {
+        "alert_id": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ],
+            "en": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ]
+          },
+          "type": "int"
+        }
+      },
+      "templates": {
+        "ar": [
+          "أكّد التنبيه رقم {alert_id}",
+          "اطلعت على التنبيه {alert_id}",
+          "علّم التنبيه {alert_id} كمقروء",
+          "اعتمد التنبيه رقم {alert_id}",
+          "ابغى أأكد التنبيه {alert_id}",
+          "وافق على التنبيه رقم {alert_id}"
+        ],
+        "en": [
+          "acknowledge alert number {alert_id}",
+          "mark alert {alert_id} as seen",
+          "confirm that I saw alert {alert_id}",
+          "acknowledge alert {alert_id}",
+          "I want to acknowledge alert {alert_id}",
+          "dismiss alert number {alert_id}"
+        ],
+        "mixed_ar": [
+          "أكّد التنبيه رقم {alert_id}"
+        ],
+        "mixed_en": [
+          "acknowledge alert number {alert_id}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأؤكد التنبيه رقم {alert_id}. أحتاج تأكيدك.",
+        "en": "Okay, I'll acknowledge alert {alert_id}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "أكّد التنبيه",
+          "اطلعت",
+          "اعتمد",
+          "مقروء"
+        ],
+        "en": [
+          "acknowledge",
+          "mark as seen",
+          "dismiss",
+          "confirm alert"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/alerts/{alert_id}/acknowledge",
+        "owns": {
+          "table": "alerts",
+          "arg": "alert_id"
+        }
+      },
+      "missing": {
+        "ar": [
+          "أكّد تنبيه",
+          "ابغى أأكد تنبيه",
+          "اعتمد التنبيه"
+        ],
+        "en": [
+          "acknowledge an alert",
+          "I want to confirm an alert",
+          "dismiss the alert"
+        ]
+      },
+      "clarify": {
+        "ar": "ما رقم التنبيه؟",
+        "en": "Which alert number?"
+      }
+    },
+    {
+      "name": "complete_routine",
+      "kind": "write",
+      "description": "Mark a routine as done by its number (needs confirmation)",
+      "args": {
+        "routine_id": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ],
+            "en": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ]
+          },
+          "type": "int"
+        }
+      },
+      "templates": {
+        "ar": [
+          "أنجزت الروتين رقم {routine_id}",
+          "علّم الروتين {routine_id} كمكتمل",
+          "خلصت مهمة الروتين {routine_id}",
+          "سجّل إنجاز الروتين رقم {routine_id}",
+          "أكملت الروتين {routine_id}",
+          "تم الروتين رقم {routine_id}"
+        ],
+        "en": [
+          "I finished routine number {routine_id}",
+          "mark routine {routine_id} as done",
+          "complete routine {routine_id}",
+          "log that routine {routine_id} is done",
+          "routine {routine_id} is complete",
+          "I'm done with routine number {routine_id}"
+        ],
+        "mixed_ar": [
+          "أنجزت الروتين رقم {routine_id}"
+        ],
+        "mixed_en": [
+          "mark routine {routine_id} as done"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأسجّل إنجاز الروتين رقم {routine_id}. أحتاج تأكيدك.",
+        "en": "Okay, I'll mark routine {routine_id} as done. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "أنجزت",
+          "خلصت",
+          "أكملت",
+          "مكتمل"
+        ],
+        "en": [
+          "finished",
+          "done",
+          "complete routine",
+          "completed"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/routines/{routine_id}/complete",
+        "owns": {
+          "table": "routines",
+          "arg": "routine_id"
+        }
+      },
+      "missing": {
+        "ar": [
+          "أنجزت الروتين",
+          "خلصت مهمة",
+          "علّم الروتين كمكتمل"
+        ],
+        "en": [
+          "I finished a routine",
+          "mark a routine as done",
+          "complete a routine"
+        ]
+      },
+      "clarify": {
+        "ar": "ما رقم الروتين؟",
+        "en": "Which routine number?"
+      }
+    },
+    {
+      "name": "open_event",
+      "kind": "write",
+      "description": "Open a new tracked health event with a title (needs confirmation)",
+      "args": {
+        "title": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "صداع شديد",
+              "دوخة بعد التمرين",
+              "ألم في الظهر",
+              "أرق ليلة أمس",
+              "ارتفاع الضغط",
+              "تعب مفاجئ",
+              "غثيان صباحي",
+              "خفقان في القلب"
+            ],
+            "en": [
+              "severe headache",
+              "dizziness after exercise",
+              "back pain",
+              "insomnia last night",
+              "high blood pressure",
+              "sudden fatigue",
+              "morning nausea",
+              "heart palpitations"
+            ]
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "افتح حدثاً جديداً بعنوان {title}",
+          "سجّل حدثاً صحياً: {title}",
+          "ابغى أبدأ متابعة حدث {title}",
+          "أنشئ حدث تعافي بعنوان {title}",
+          "ابدأ تتبع حدث {title}",
+          "أضف حدثاً جديداً اسمه {title}"
+        ],
+        "en": [
+          "open a new event titled {title}",
+          "log a health event: {title}",
+          "start tracking an event: {title}",
+          "create a recovery event called {title}",
+          "begin tracking {title} as an event",
+          "add a new event named {title}"
+        ],
+        "mixed_ar": [
+          "افتح حدثاً جديداً بعنوان {title}"
+        ],
+        "mixed_en": [
+          "open a new event titled {title}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأفتح حدثاً جديداً بعنوان {title}. أحتاج تأكيدك.",
+        "en": "Okay, I'll open a new event titled {title}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "حدث جديد",
+          "افتح حدث",
+          "ابدأ متابعة",
+          "تتبع"
+        ],
+        "en": [
+          "new event",
+          "open an event",
+          "start tracking",
+          "recovery event"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/events",
+        "body": {
+          "astronaut_id": "$astronaut",
+          "title": "{title}"
+        },
+        "clock": "opened_at"
+      },
+      "missing": {
+        "ar": [
+          "افتح حدثاً جديداً",
+          "ابغى أسجل حدث صحي",
+          "ابدأ متابعة حدث"
+        ],
+        "en": [
+          "open a new event",
+          "I want to log a health event",
+          "start tracking an event"
+        ]
+      },
+      "clarify": {
+        "ar": "ما عنوان الحدث؟",
+        "en": "What should the event be called?"
+      }
+    },
+    {
+      "name": "complete_follow_up",
+      "kind": "write",
+      "description": "Complete a recovery follow-up using a measurement number (needs confirmation)",
+      "args": {
+        "followup_id": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ],
+            "en": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ]
+          },
+          "type": "int"
+        },
+        "measurement_id": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ],
+            "en": [
+              "3",
+              "12",
+              "27",
+              "41",
+              "58",
+              "7",
+              "90",
+              "105"
+            ]
+          },
+          "type": "int"
+        }
+      },
+      "templates": {
+        "ar": [
+          "أكمل المتابعة رقم {followup_id} بالقياس {measurement_id}",
+          "اربط المتابعة {followup_id} بالقياس رقم {measurement_id}",
+          "أنهِ متابعة {followup_id} باستخدام القياس {measurement_id}",
+          "سجّل المتابعة {followup_id} بنتيجة القياس {measurement_id}",
+          "خلّص المتابعة {followup_id} بالقياس {measurement_id}",
+          "تمت المتابعة {followup_id} والقياس {measurement_id}"
+        ],
+        "en": [
+          "complete follow-up {followup_id} with measurement {measurement_id}",
+          "link follow-up {followup_id} to measurement number {measurement_id}",
+          "finish follow-up {followup_id} using measurement {measurement_id}",
+          "close follow-up {followup_id} with the reading {measurement_id}",
+          "mark follow-up {followup_id} done using measurement {measurement_id}",
+          "follow-up {followup_id} is done, measurement {measurement_id}"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، سأكمل المتابعة {followup_id} بالقياس {measurement_id}. أحتاج تأكيدك.",
+        "en": "Okay, I'll complete follow-up {followup_id} with measurement {measurement_id}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "المتابعة",
+          "متابعة"
+        ],
+        "en": [
+          "follow-up",
+          "followup"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/follow-ups/{followup_id}/complete",
+        "body": {
+          "measurement_id": "{measurement_id}"
+        }
+      }
+    },
+    {
+      "name": "add_astronaut",
+      "kind": "write",
+      "description": "Add a new astronaut with a name and mission setting (needs confirmation)",
+      "args": {
+        "name": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "سارة",
+              "عمر",
+              "ليلى",
+              "خالد",
+              "نورة",
+              "يوسف",
+              "ريم",
+              "فهد"
+            ],
+            "en": [
+              "Sara",
+              "Omar",
+              "Layla",
+              "Khalid",
+              "Noura",
+              "Yusuf",
+              "Reem",
+              "Fahad"
+            ]
+          }
+        },
+        "setting": {
+          "kind": "enum",
+          "values": {
+            "spacecraft": {
+              "ar": [
+                "مركبة فضائية",
+                "المركبة"
+              ],
+              "en": [
+                "spacecraft",
+                "a spacecraft"
+              ]
+            },
+            "station": {
+              "ar": [
+                "محطة فضاء",
+                "المحطة"
+              ],
+              "en": [
+                "station",
+                "a space station"
+              ]
+            },
+            "rover": {
+              "ar": [
+                "مركبة جوالة",
+                "الروفر"
+              ],
+              "en": [
+                "rover",
+                "a rover"
+              ]
+            },
+            "habitat": {
+              "ar": [
+                "موطن فضائي",
+                "الموئل"
+              ],
+              "en": [
+                "habitat",
+                "a habitat"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "أضف رائداً جديداً اسمه {name} في {setting}",
+          "سجّل رائد فضاء باسم {name} على {setting}",
+          "ابغى أضيف {name} للطاقم في {setting}",
+          "أنشئ رائداً اسمه {name} في {setting}",
+          "ضم {name} إلى الطاقم في {setting}",
+          "أضف {name} كرائد جديد في {setting}"
+        ],
+        "en": [
+          "add a new astronaut named {name} in a {setting}",
+          "register an astronaut called {name} on a {setting}",
+          "I want to add {name} to the crew in a {setting}",
+          "create an astronaut {name} for a {setting}",
+          "add {name} to the crew on a {setting}",
+          "add {name} as a new astronaut in a {setting}"
+        ],
+        "mixed_ar": [
+          "أضف رائداً جديداً اسمه {name} في {setting}"
+        ],
+        "mixed_en": [
+          "add a new astronaut named {name} in a {setting}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأضيف الرائد {name}. أحتاج تأكيدك.",
+        "en": "Okay, I'll add astronaut {name}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "أضف رائد",
+          "رائد جديد",
+          "ضم",
+          "سجّل رائد"
+        ],
+        "en": [
+          "add astronaut",
+          "new astronaut",
+          "register astronaut",
+          "add to the crew"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/astronauts",
+        "body": {
+          "display_name": "{name}",
+          "mission_setting": "{setting}"
+        }
+      },
+      "missing": {
+        "ar": [
+          "أضف رائداً جديداً",
+          "ابغى أسجل رائد",
+          "أنشئ رائد"
+        ],
+        "en": [
+          "add a new astronaut",
+          "I want to register an astronaut",
+          "create an astronaut"
+        ]
+      },
+      "clarify": {
+        "ar": "ما اسم الرائد وأين يعمل؟",
+        "en": "What is the astronaut called, and where do they work?"
+      }
+    },
+    {
+      "name": "import_data",
+      "kind": "write",
+      "description": "Import a CSV file using a mapping file (needs confirmation)",
+      "args": {
+        "csv_file": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "vitals_iss.csv",
+              "crew_labs.csv",
+              "sleep_log.csv",
+              "telemetry_week1.csv",
+              "heart_data.csv",
+              "glucose_march.csv",
+              "habitat_run2.csv",
+              "mission_vitals.csv"
+            ],
+            "en": [
+              "vitals_iss.csv",
+              "crew_labs.csv",
+              "sleep_log.csv",
+              "telemetry_week1.csv",
+              "heart_data.csv",
+              "glucose_march.csv",
+              "habitat_run2.csv",
+              "mission_vitals.csv"
+            ]
+          },
+          "type": "filename"
+        },
+        "mapping": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "nasa_map.json",
+              "iss_map.json",
+              "labs_map.json",
+              "generic_map.json",
+              "sleep_map.json",
+              "wearable_map.json",
+              "habitat_map.json",
+              "vitals_map.json"
+            ],
+            "en": [
+              "nasa_map.json",
+              "iss_map.json",
+              "labs_map.json",
+              "generic_map.json",
+              "sleep_map.json",
+              "wearable_map.json",
+              "habitat_map.json",
+              "vitals_map.json"
+            ]
+          },
+          "type": "filename"
+        }
+      },
+      "templates": {
+        "ar": [
+          "استورد الملف {csv_file} بخريطة {mapping}",
+          "ابغى أستورد {csv_file} باستخدام {mapping}",
+          "شغّل استيراد {csv_file} مع {mapping}",
+          "حمّل بيانات {csv_file} بالخريطة {mapping}",
+          "نفّذ استيراد الملف {csv_file} وخريطته {mapping}",
+          "أدخل الملف {csv_file} عبر {mapping}"
+        ],
+        "en": [
+          "import {csv_file} with mapping {mapping}",
+          "I want to import {csv_file} using {mapping}",
+          "run the import of {csv_file} with {mapping}",
+          "load the data from {csv_file} using the mapping {mapping}",
+          "start importing {csv_file} via {mapping}",
+          "bring in {csv_file} with {mapping}"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حسناً، سأستورد {csv_file} بخريطة {mapping}. أحتاج تأكيدك.",
+        "en": "Okay, I'll import {csv_file} with mapping {mapping}. I need your confirmation."
+      },
+      "keywords": {
+        "ar": [
+          "استورد",
+          "استيراد",
+          "حمّل بيانات"
+        ],
+        "en": [
+          "import",
+          "load data",
+          "bring in"
+        ]
+      },
+      "exec": {
+        "method": "POST",
+        "path": "/api/import",
+        "query": {
+          "csv_file": "{csv_file}",
+          "mapping": "{mapping}"
+        }
+      },
+      "missing": {
+        "ar": [
+          "استورد ملف",
+          "ابغى أستورد بيانات",
+          "شغّل الاستيراد"
+        ],
+        "en": [
+          "import a file",
+          "I want to import data",
+          "run the import"
+        ]
+      },
+      "clarify": {
+        "ar": "ما اسم الملف وما اسم خريطة الاستيراد؟",
+        "en": "Which file, and which mapping?"
+      }
+    },
+    {
+      "name": "navigate",
+      "kind": "ui",
+      "description": "Open a page of the app",
+      "args": {
+        "page": {
+          "kind": "enum",
+          "values": {
+            "home": {
+              "ar": [
+                "الرئيسية",
+                "الصفحة الرئيسية"
+              ],
+              "en": [
+                "home",
+                "the home page"
+              ]
+            },
+            "log": {
+              "ar": [
+                "صفحة القياسات",
+                "تسجيل القياسات"
+              ],
+              "en": [
+                "the measurements page",
+                "the log page"
+              ]
+            },
+            "events": {
+              "ar": [
+                "صفحة التنبيهات",
+                "التنبيهات والأحداث"
+              ],
+              "en": [
+                "the alerts page",
+                "the events page"
+              ]
+            },
+            "evidence": {
+              "ar": [
+                "صفحة التعلم",
+                "المصادر العلمية"
+              ],
+              "en": [
+                "the learn page",
+                "the evidence page"
+              ]
+            },
+            "trends": {
+              "ar": [
+                "صفحة الاتجاهات",
+                "الاتجاهات"
+              ],
+              "en": [
+                "the trends page",
+                "trends"
+              ]
+            },
+            "routine": {
+              "ar": [
+                "صفحة الروتين",
+                "الروتين اليومي"
+              ],
+              "en": [
+                "the routine page",
+                "my routines page"
+              ]
+            },
+            "crew": {
+              "ar": [
+                "صفحة الطاقم",
+                "الطاقم"
+              ],
+              "en": [
+                "the crew page",
+                "crew"
+              ]
+            },
+            "eye": {
+              "ar": [
+                "فحص العين",
+                "صفحة العين"
+              ],
+              "en": [
+                "the eye scan",
+                "the eye page"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "افتح {page}",
+          "خذني إلى {page}",
+          "ودّني على {page}",
+          "ابغى أشوف {page}",
+          "انتقل إلى {page}",
+          "روح إلى {page}",
+          "أريد الذهاب إلى {page}",
+          "أبي أدخل {page}"
+        ],
+        "en": [
+          "open {page}",
+          "go to {page}",
+          "take me to {page}",
+          "show me {page}",
+          "navigate to {page}",
+          "I want to see {page}",
+          "bring up {page}",
+          "can you open {page}"
+        ],
+        "mixed_ar": [
+          "افتح {page}",
+          "خذني إلى {page}",
+          "روح {page}",
+          "ودّني على {page}"
+        ],
+        "mixed_en": [
+          "open {page}",
+          "take me to {page}",
+          "go to {page}",
+          "show me {page}"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأفتح {page}.",
+        "en": "Sure, opening {page}."
+      },
+      "keywords": {
+        "ar": [
+          "افتح",
+          "خذني",
+          "ودني",
+          "روح",
+          "صفحة",
+          "انتقل"
+        ],
+        "en": [
+          "open",
+          "go to",
+          "take me",
+          "navigate",
+          "page"
+        ]
+      },
+      "ui": {
+        "op": "navigate",
+        "routes": {
+          "home": "/",
+          "log": "/log",
+          "events": "/events",
+          "evidence": "/evidence",
+          "trends": "/trends",
+          "routine": "/routine",
+          "crew": "/crew",
+          "eye": "/eye"
+        }
+      }
+    },
+    {
+      "name": "set_theme",
+      "kind": "ui",
+      "description": "Switch the app between dark and light mode",
+      "args": {
+        "mode": {
+          "kind": "enum",
+          "values": {
+            "dark": {
+              "ar": [
+                "الوضع الداكن",
+                "الوضع الليلي"
+              ],
+              "en": [
+                "dark mode",
+                "the dark theme"
+              ]
+            },
+            "light": {
+              "ar": [
+                "الوضع الفاتح",
+                "الوضع النهاري"
+              ],
+              "en": [
+                "light mode",
+                "the light theme"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "فعّل {mode}",
+          "شغّل {mode}",
+          "حوّل إلى {mode}",
+          "غيّر إلى {mode}",
+          "ابغى {mode}"
+        ],
+        "en": [
+          "switch to {mode}",
+          "turn on {mode}",
+          "enable {mode}",
+          "change to {mode}",
+          "I'd like {mode}"
+        ],
+        "mixed_ar": [
+          "فعّل {mode}",
+          "حوّل إلى {mode}"
+        ],
+        "mixed_en": [
+          "switch to {mode}",
+          "turn on {mode}"
+        ]
+      },
+      "reply": {
+        "ar": "تم، سأفعّل {mode}.",
+        "en": "Done, switching to {mode}."
+      },
+      "keywords": {
+        "ar": [
+          "الوضع",
+          "داكن",
+          "فاتح",
+          "ليلي",
+          "نهاري"
+        ],
+        "en": [
+          "mode",
+          "dark",
+          "light",
+          "theme"
+        ]
+      },
+      "ui": {
+        "op": "set_theme"
+      }
+    },
+    {
+      "name": "set_language",
+      "kind": "ui",
+      "description": "Change the language of the app itself",
+      "args": {
+        "lang": {
+          "kind": "enum",
+          "values": {
+            "ar": {
+              "ar": [
+                "العربية",
+                "اللغة العربية"
+              ],
+              "en": [
+                "Arabic",
+                "the Arabic language"
+              ]
+            },
+            "en": {
+              "ar": [
+                "الإنجليزية",
+                "اللغة الإنجليزية"
+              ],
+              "en": [
+                "English",
+                "the English language"
+              ]
+            }
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "غيّر لغة الموقع إلى {lang}",
+          "حوّل الموقع إلى {lang}",
+          "خلّ لغة الموقع {lang}",
+          "اجعل واجهة الموقع بـ{lang}"
+        ],
+        "en": [
+          "change the site language to {lang}",
+          "switch the website to {lang}",
+          "set the website language to {lang}",
+          "make the interface {lang}"
+        ],
+        "mixed_ar": [
+          "غيّر لغة الموقع إلى {lang}",
+          "حوّل الموقع إلى {lang}"
+        ],
+        "mixed_en": [
+          "change the site language to {lang}",
+          "switch the website to {lang}"
+        ]
+      },
+      "reply": {
+        "ar": "تم، سأغيّر لغة الموقع إلى {lang}.",
+        "en": "Done, changing the site language to {lang}."
+      },
+      "keywords": {
+        "ar": [
+          "لغة الموقع",
+          "اللغة",
+          "واجهة"
+        ],
+        "en": [
+          "site language",
+          "interface language",
+          "website to"
+        ]
+      },
+      "ui": {
+        "op": "set_language"
+      }
+    },
+    {
+      "name": "select_astronaut",
+      "kind": "ui",
+      "description": "Switch the app to another astronaut by name",
+      "args": {
+        "name": {
+          "kind": "text",
+          "examples": {
+            "ar": [
+              "سارة",
+              "عمر",
+              "ليلى",
+              "خالد",
+              "نورة",
+              "يوسف",
+              "ريم",
+              "فهد"
+            ],
+            "en": [
+              "Sara",
+              "Omar",
+              "Layla",
+              "Khalid",
+              "Noura",
+              "Yusuf",
+              "Reem",
+              "Fahad"
+            ]
+          }
+        }
+      },
+      "templates": {
+        "ar": [
+          "بدّل إلى الرائد {name}",
+          "اعرض بيانات {name}",
+          "حوّل الملف إلى {name}",
+          "ابغى أشوف قياسات {name}",
+          "اختر الرائد {name}",
+          "انتقل إلى ملف {name}"
+        ],
+        "en": [
+          "switch to astronaut {name}",
+          "show {name}'s data",
+          "change the profile to {name}",
+          "I want to see {name}'s measurements",
+          "select astronaut {name}",
+          "go to {name}'s profile"
+        ],
+        "mixed_ar": [
+          "بدّل إلى الرائد {name}",
+          "اعرض بيانات {name}"
+        ],
+        "mixed_en": [
+          "switch to astronaut {name}",
+          "show {name}'s data"
+        ]
+      },
+      "reply": {
+        "ar": "حسناً، سأنتقل إلى {name}.",
+        "en": "Okay, switching to {name}."
+      },
+      "keywords": {
+        "ar": [
+          "بدل إلى",
+          "اختر الرائد",
+          "ملف",
+          "بيانات"
+        ],
+        "en": [
+          "switch to",
+          "select astronaut",
+          "profile",
+          "'s data"
+        ]
+      },
+      "ui": {
+        "op": "select_astronaut",
+        "resolve": "astronaut"
+      },
+      "missing": {
+        "ar": [
+          "بدّل الرائد",
+          "ابغى أغيّر الرائد",
+          "اختر رائداً آخر"
+        ],
+        "en": [
+          "switch astronaut",
+          "I want to change the astronaut",
+          "select another astronaut"
+        ]
+      },
+      "clarify": {
+        "ar": "ما اسم الرائد؟",
+        "en": "Which astronaut?"
+      }
+    },
+    {
+      "name": "stop_speaking",
+      "kind": "ui",
+      "description": "Stop the assistant's voice output",
+      "args": {},
+      "templates": {
+        "ar": [
+          "توقف عن الكلام",
+          "اسكت",
+          "كفاية",
+          "أوقف الصوت",
+          "وقّف الصوت",
+          "خلاص يكفي"
+        ],
+        "en": [
+          "stop talking",
+          "be quiet",
+          "stop speaking",
+          "that's enough",
+          "stop the voice",
+          "okay stop"
+        ],
+        "mixed_ar": [],
+        "mixed_en": []
+      },
+      "reply": {
+        "ar": "حاضر، توقفت.",
+        "en": "Okay, I've stopped."
+      },
+      "keywords": {
+        "ar": [
+          "توقف",
+          "اسكت",
+          "كفاية",
+          "الصوت"
+        ],
+        "en": [
+          "stop",
+          "quiet",
+          "enough",
+          "voice"
+        ]
+      },
+      "ui": {
+        "op": "stop_speaking"
+      }
+    }
+  ],
+  "lang_instructions": {
+    "ar": {
+      "ar": [
+        "وجاوبني بالعربي",
+        "ورد عليّ بالعربية"
+      ],
+      "en": [
+        "وجاوبني بالإنجليزي",
+        "ورد عليّ بالإنجليزية"
+      ],
+      "both": [
+        "وجاوبني بالعربي والإنجليزي",
+        "ورد بالعربية والإنجليزية معاً"
+      ]
+    },
+    "en": {
+      "ar": [
+        "and reply in Arabic",
+        "and answer in Arabic"
+      ],
+      "en": [
+        "and reply in English",
+        "and answer in English"
+      ],
+      "both": [
+        "and reply in both Arabic and English",
+        "and answer in Arabic and English"
+      ]
+    }
+  },
+  "chat": [
+    {
+      "id": "identity",
+      "q": {
+        "ar": [
+          "من أنت؟",
+          "ما اسمك؟",
+          "وش اسمك؟",
+          "شو اسمك؟",
+          "عرّفني بنفسك",
+          "أنت مين؟",
+          "هل اسمك أطلس؟",
+          "بماذا أناديك؟"
+        ],
+        "en": [
+          "Who are you?",
+          "What's your name?",
+          "Introduce yourself",
+          "Are you Atlas?",
+          "What should I call you?",
+          "Tell me about yourself"
+        ]
+      },
+      "a": {
+        "ar": [
+          "أنا أطلس، مساعد ذكي يفهم العربية والإنجليزية. أستطيع الإجابة عن أسئلتك وتنفيذ بعض الإجراءات في الموقع عندما تطلب مني ذلك.",
+          "اسمي أطلس. أتحدث العربية والإنجليزية، وأساعدك في الأسئلة العامة وفي الإجراءات المتاحة لي في الموقع."
+        ],
+        "en": [
+          "I'm Atlas, a bilingual Arabic-English assistant. I can answer your questions and carry out some actions on the website when you ask.",
+          "My name is Atlas. I speak Arabic and English, and I can help with general questions and the website actions I have available."
+        ]
+      }
+    },
+    {
+      "id": "salam",
+      "q": {
+        "ar": [
+          "السلام عليكم",
+          "سلام عليكم ورحمة الله"
+        ],
+        "en": [
+          "Assalamu alaikum",
+          "Peace be upon you"
+        ]
+      },
+      "a": {
+        "ar": [
+          "وعليكم السلام ورحمة الله، أنا أطلس. كيف أستطيع مساعدتك؟",
+          "وعليكم السلام، تفضّل، كيف أساعدك؟"
+        ],
+        "en": [
+          "Wa alaikum assalam. I'm Atlas, how can I help?",
+          "Wa alaikum assalam, how can I help you?"
+        ]
+      }
+    },
+    {
+      "id": "hello",
+      "q": {
+        "ar": [
+          "مرحبا",
+          "هلا",
+          "أهلاً",
+          "هاي"
+        ],
+        "en": [
+          "Hello",
+          "Hi",
+          "Hey there",
+          "Hi Atlas"
+        ]
+      },
+      "a": {
+        "ar": [
+          "أهلاً بك، أنا أطلس. كيف أستطيع مساعدتك؟",
+          "مرحباً، تفضّل، كيف أساعدك؟"
+        ],
+        "en": [
+          "Hello! I'm Atlas. How can I help you?",
+          "Hi, how can I help?"
+        ]
+      }
+    },
+    {
+      "id": "morning",
+      "q": {
+        "ar": [
+          "صباح الخير",
+          "صباح النور"
+        ],
+        "en": [
+          "Good morning",
+          "Morning"
+        ]
+      },
+      "a": {
+        "ar": [
+          "صباح النور، كيف أستطيع مساعدتك؟"
+        ],
+        "en": [
+          "Good morning! How can I help?"
+        ]
+      }
+    },
+    {
+      "id": "evening",
+      "q": {
+        "ar": [
+          "مساء الخير",
+          "مساء النور"
+        ],
+        "en": [
+          "Good evening",
+          "Evening"
+        ]
+      },
+      "a": {
+        "ar": [
+          "مساء النور، كيف أستطيع مساعدتك؟"
+        ],
+        "en": [
+          "Good evening! How can I help?"
+        ]
+      }
+    },
+    {
+      "id": "how_are_you",
+      "q": {
+        "ar": [
+          "كيف حالك؟",
+          "شلونك؟",
+          "كيفك؟"
+        ],
+        "en": [
+          "How are you?",
+          "How's it going?",
+          "How are you doing?"
+        ]
+      },
+      "a": {
+        "ar": [
+          "أنا بخير، شكراً لسؤالك. كيف أستطيع مساعدتك؟"
+        ],
+        "en": [
+          "I'm doing well, thanks for asking. How can I help?"
+        ]
+      }
+    },
+    {
+      "id": "capabilities",
+      "q": {
+        "ar": [
+          "ماذا تستطيع أن تفعل؟",
+          "وش تقدر تسوي؟",
+          "ما هي قدراتك؟",
+          "كيف تقدر تساعدني؟"
+        ],
+        "en": [
+          "What can you do?",
+          "What are your capabilities?",
+          "How can you help me?",
+          "What are you able to do?"
+        ]
+      },
+      "a": {
+        "ar": [
+          "أستطيع الإجابة عن أسئلتك بالعربية والإنجليزية، وتقديم معلومات صحية عامة، وتنفيذ إجراءات الموقع المتاحة لي عندما تطلب مني ذلك."
+        ],
+        "en": [
+          "I can answer your questions in Arabic and English, give general health information, and carry out the website actions available to me when you ask."
+        ]
+      }
+    },
+    {
+      "id": "not_doctor",
+      "q": {
+        "ar": [
+          "هل أنت طبيب؟",
+          "هل أستطيع الاعتماد عليك في التشخيص؟",
+          "هل تقدر تشخص حالتي؟"
+        ],
+        "en": [
+          "Are you a doctor?",
+          "Can I rely on you for a diagnosis?",
+          "Can you diagnose me?"
+        ]
+      },
+      "a": {
+        "ar": [
+          "لا، لست طبيباً ولا أستطيع التشخيص أو وصف جرعات شخصية. أقدّم معلومات عامة فقط، والأفضل استشارة الطبيب، وفي الحالات العاجلة اطلب الرعاية الطارئة فوراً."
+        ],
+        "en": [
+          "No, I'm not a doctor and I can't diagnose or prescribe personal doses. I only give general information, so it's best to consult a clinician, and for urgent symptoms please seek emergency care right away."
+        ]
+      }
+    },
+    {
+      "id": "thanks",
+      "q": {
+        "ar": [
+          "شكراً",
+          "شكرا لك",
+          "يعطيك العافية"
+        ],
+        "en": [
+          "Thanks",
+          "Thank you",
+          "Thanks a lot"
+        ]
+      },
+      "a": {
+        "ar": [
+          "العفو، أنا في الخدمة.",
+          "على الرحب والسعة."
+        ],
+        "en": [
+          "You're welcome!",
+          "Happy to help."
+        ]
+      }
+    },
+    {
+      "id": "who_made",
+      "q": {
+        "ar": [
+          "من صنعك؟",
+          "من درّبك؟",
+          "من برمجك؟"
+        ],
+        "en": [
+          "Who made you?",
+          "Who trained you?",
+          "Who built you?"
+        ]
+      },
+      "a": {
+        "ar": [
+          "أنا نموذج لغوي صغير مبني على نموذج مفتوح المصدر، وقد درّبه مطوّري محلياً. ليست لدي تفاصيل أكثر من ذلك."
+        ],
+        "en": [
+          "I'm a small language model built on an open-source base model and fine-tuned locally by my developer. I don't have more details than that."
+        ]
+      }
+    },
+    {
+      "id": "languages",
+      "q": {
+        "ar": [
+          "هل تتكلم الإنجليزية؟",
+          "هل تفهم العربية؟",
+          "هل تفهم لما أخلط العربي بالإنجليزي؟"
+        ],
+        "en": [
+          "Do you speak Arabic?",
+          "Can you understand English?",
+          "Do you understand when I mix Arabic and English?"
+        ]
+      },
+      "a": {
+        "ar": [
+          "نعم، أتحدث العربية والإنجليزية وأفهم الخلط بينهما، وأرد بلغتك أو باللغة التي تطلبها."
+        ],
+        "en": [
+          "Yes, I speak Arabic and English and I understand mixing them. I reply in your language or in the language you ask for."
+        ]
+      }
+    }
+  ],
+  "unsupported_default_reply": {
+    "ar": [
+      "لا أستطيع تنفيذ ذلك حالياً لأنه ليس ضمن الإجراءات المتاحة لي.",
+      "عذراً، هذا الإجراء غير متاح لي الآن."
+    ],
+    "en": [
+      "I can't do that right now because it isn't one of the actions available to me.",
+      "Sorry, that action isn't available to me at the moment."
+    ]
+  },
+  "unsupported": [
+    {
+      "q": {
+        "ar": [
+          "احجز لي تذكرة طيران",
+          "اطلب لي بيتزا",
+          "ارسل بريداً إلكترونياً لمديري",
+          "احذف حسابي نهائياً"
+        ],
+        "en": [
+          "book me a flight",
+          "order me a pizza",
+          "send an email to my manager",
+          "delete my account permanently"
+        ]
+      }
+    },
+    {
+      "q": {
+        "ar": [
+          "اتصل بالإسعاف",
+          "اتصل بالطوارئ"
+        ],
+        "en": [
+          "call an ambulance",
+          "call the emergency services"
+        ]
+      },
+      "a": {
+        "ar": [
+          "لا أستطيع إجراء المكالمات نيابةً عنك. إذا كانت الحالة عاجلة فاتصل برقم الطوارئ في بلدك فوراً."
+        ],
+        "en": [
+          "I can't place calls for you. If this is an emergency, call your local emergency number right away."
+        ]
+      }
+    },
+    {
+      "q": {
+        "ar": [
+          "احذف كل قياساتي",
+          "امسح بيانات الرائد",
+          "غيّر قواعد التنبيه",
+          "أرسل تقريري لوكالة الفضاء"
+        ],
+        "en": [
+          "delete all my measurements",
+          "wipe the astronaut's data",
+          "change the alert rules",
+          "send my report to the space agency"
+        ]
+      }
+    }
+  ],
+  "wake_only": {
+    "ar": [
+      "نعم، أنا أسمعك. تفضّل.",
+      "نعم، كيف أساعدك؟"
+    ],
+    "en": [
+      "Yes, I'm listening.",
+      "Yes, how can I help?"
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "model_type": "robust_percentile_baseline",
+  "version": 2,
+  "trained_on": "NASA OSDR Environmental Data App (ISS cabin telemetry)",
+  "disclaimer": "Statistical reference from past ISS missions - not a safety limit and not a diagnosis.",
+  "data_note": "Cabin readings logged during Rodent Research experiment periods on the ISS. ISS columns only. Not astronaut health data.",
+  "excluded_before_training": {
+    "co2_below_300ppm_flagged_suspect": 2274,
+    "humidity_out_of_range_dropped": 1434,
+    "conflicting_values_set_not_available": 2
+  },
+  "watch_percentiles": [
+    1.0,
+    99.0
+  ],
+  "alert_percentiles": [
+    0.1,
+    99.9
+  ],
+  "parameters": {
+    "cabin_temp": {
+      "n": 500654,
+      "median": 22.63,
+      "mad": 0.47,
+      "watch_low": 20.4,
+      "watch_high": 24.2,
+      "alert_low": 18.9,
+      "alert_high": 26.6,
+      "unit": "°C",
+      "missions": [
+        "RR-1",
+        "RR-10",
+        "RR-12",
+        "RR-18",
+        "RR-19",
+        "RR-20",
+        "RR-23",
+        "RR-25",
+        "RR-28",
+        "RR-3",
+        "RR-5",
+        "RR-6",
+        "RR-7",
+        "RR-9"
+      ]
+    },
+    "humidity": {
+      "n": 308034,
+      "median": 41.0,
+      "mad": 4.0,
+      "watch_low": 34.0,
+      "watch_high": 79.44,
+      "alert_low": 31.0,
+      "alert_high": 97.72,
+      "unit": "%",
+      "missions": [
+        "RR-1",
+        "RR-10",
+        "RR-12",
+        "RR-18",
+        "RR-19",
+        "RR-23",
+        "RR-3",
+        "RR-5",
+        "RR-6",
+        "RR-7",
+        "RR-9"
+      ]
+    },
+    "co2": {
+      "n": 196555,
+      "median": 2511.0,
+      "mad": 481.0,
+      "watch_low": 1469.0,
+      "watch_high": 6474.0,
+      "alert_low": 500.0,
+      "alert_high": 8282.784,
+      "unit": "ppm",
+      "missions": [
+        "RR-1",
+        "RR-10",
+        "RR-12",
+        "RR-19",
+        "RR-23",
+        "RR-3",
+        "RR-5",
+        "RR-6",
+        "RR-7",
+        "RR-9"
+      ]
+    }
+  },
+  "validation": {
+    "cabin_temp": {
+      "unit": "°C",
+      "n_missions": 14,
+      "n_readings": 500654,
+      "missions_below_min_readings": [],
+      "expected_watch_rate": 0.02,
+      "expected_alert_rate": 0.002,
+      "watch_rate_median": 0.026,
+      "watch_rate_max": 0.1954
+    },
+    "humidity": {
+      "unit": "%",
+      "n_missions": 11,
+      "n_readings": 308034,
+      "missions_below_min_readings": [],
+      "expected_watch_rate": 0.02,
+      "expected_alert_rate": 0.002,
+      "watch_rate_median": 0.0087,
+      "watch_rate_max": 0.1338
+    },
+    "co2": {
+      "unit": "ppm",
+      "n_missions": 10,
+      "n_readings": 196555,
+      "missions_below_min_readings": [],
+      "expected_watch_rate": 0.02,
+      "expected_alert_rate": 0.002,
+      "watch_rate_median": 0.001,
+      "watch_rate_max": 0.1022
+    }
+  }
+}

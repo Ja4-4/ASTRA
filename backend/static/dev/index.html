@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASTRA — Mission health overview</title>
+<!--
+  PLACEHOLDER FRONT END. Replace or extend freely: anything inside ./static is served as-is
+  (index.html at "/", plus css/js/images in sub-folders). The JSON API lives under /api.
+  Useful calls:  /api/overview/1   /api/trends?astronaut_id=1&indicator_code=heart_rate&days=7
+                 /api/alerts?astronaut_id=1   /api/routines?astronaut_id=1   /api/evidence
+-->
+<style>
+  :root { --bg:#f5f7fa; --ink:#15243b; --mute:#6b778c; --line:#dde3ec; --ok:#2c7a5b; --review:#b9770e; --urgent:#c0392b; --info:#2a6db0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.45 system-ui,sans-serif; background:var(--bg); color:var(--ink); display:flex; min-height:100vh; }
+  nav { width:190px; background:var(--ink); color:#fff; padding:22px 18px; flex-shrink:0; }
+  nav h1 { font-size:20px; margin:0 0 22px; letter-spacing:.06em; }
+  nav a { display:block; color:#b9c4d6; padding:8px 0; text-decoration:none; }
+  nav a:hover { color:#fff; }
+  main { flex:1; padding:24px 28px; max-width:1100px; }
+  header { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; }
+  h2 { margin:0; font-size:22px; }
+  .demo { color:var(--mute); font-size:12px; letter-spacing:.05em; text-transform:uppercase; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:12px; margin:18px 0; }
+  .card { background:#fff; border:1px solid var(--line); border-left:5px solid var(--ok); border-radius:10px; padding:12px 14px; cursor:pointer; }
+  .card.review { border-left-color:var(--review); } .card.urgent { border-left-color:var(--urgent); }
+  .card.info { border-left-color:var(--info); } .card.not_available { border-left-color:#b8c0cc; }
+  .card .k { font-size:11px; color:var(--mute); text-transform:uppercase; letter-spacing:.05em; }
+  .card .v { font-size:24px; font-weight:650; margin:3px 0; }
+  .card .v small { font-size:13px; font-weight:400; color:var(--mute); }
+  .card .m { font-size:11px; color:var(--mute); }
+  .badge { display:inline-block; font-size:11px; padding:1px 8px; border-radius:20px; background:#e8f3ee; color:var(--ok); font-weight:600; }
+  .card.review .badge { background:#fbf0dc; color:var(--review); } .card.urgent .badge { background:#f9e1de; color:var(--urgent); }
+  .card.info .badge { background:#e1ecf8; color:var(--info); } .card.not_available .badge { background:#eceff3; color:var(--mute); }
+  .grid { display:grid; grid-template-columns:2fr 1fr; gap:14px; }
+  @media (max-width:820px) { body { flex-direction:column; } nav { width:auto; } .grid { grid-template-columns:1fr; } }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:14px; }
+  .panel h3 { margin:0 0 8px; font-size:14px; }
+  .alert { border-left:4px solid var(--review); background:#fffaf0; padding:8px 10px; margin:8px 0; border-radius:6px; font-size:13px; }
+  .alert b { display:block; font-size:11px; letter-spacing:.05em; color:var(--review); }
+  .routine { border-left:4px solid var(--ok); background:#f0f8f4; padding:8px 10px; margin:8px 0; border-radius:6px; font-size:13px; }
+  svg { width:100%; height:170px; display:block; }
+  .note { font-size:12px; color:var(--mute); margin-top:6px; }
+  button { font:inherit; padding:4px 10px; border:1px solid var(--line); border-radius:6px; background:#fff; cursor:pointer; }
+</style>
+</head>
+<body>
+<nav>
+  <h1>ASTRA</h1>
+  <a href="#overview">Overview</a><a href="#trends">Trends</a><a href="#routine">Routine</a><a href="#evidence">Evidence</a>
+</nav>
+<main>
+  <header><h2>Mission health overview</h2><span class="demo" id="demo">loading…</span></header>
+  <div class="cards" id="cards"></div>
+  <div class="grid">
+    <div class="panel" id="trends"><h3 id="trendTitle">7-day trend</h3><svg id="chart" viewBox="0 0 400 170"></svg><div class="note" id="trendNote"></div></div>
+    <div>
+      <div class="panel" id="alertsPanel"><h3>Review</h3><div id="alerts"></div></div>
+      <div class="panel" id="routine"><h3>Today's routine</h3><div id="routines"></div></div>
+    </div>
+  </div>
+  <div class="panel" id="evidence"><h3>Evidence &amp; sources</h3><div id="ev"></div></div>
+  <p class="note">ASTRA supports self-assessment and follow-up; it is not a doctor, a diagnostic device, or a replacement for the flight surgeon.</p>
+</main>
+<script>
+const AID = 1, $ = id => document.getElementById(id);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const label = {normal:'normal', review:'review', urgent:'urgent', info:'note', not_available:'not available'};
+const get = async p => { const r = await fetch('/api' + p); if (!r.ok) throw new Error(p + ' ' + r.status); return r.json(); };
+
+async function trend(code, name) {
+  const t = await get(`/trends?astronaut_id=${AID}&indicator_code=${code}&days=7`);
+  $('trendTitle').textContent = `7-day trend — ${name} (${t.unit})`;
+  const pts = t.points; const svg = $('chart');
+  if (!pts.length) { svg.innerHTML = ''; $('trendNote').textContent = 'not available'; return; }
+  const ys = pts.map(p => p.avg), lo = Math.min(...ys, t.baseline ? t.baseline.mean : Infinity), hi = Math.max(...ys, t.baseline ? t.baseline.mean : -Infinity);
+  const pad = (hi - lo) * .15 || 1, y0 = lo - pad, y1 = hi + pad;
+  const X = i => 20 + i * (360 / Math.max(pts.length - 1, 1)), Y = v => 150 - (v - y0) / (y1 - y0) * 130;
+  const line = pts.map((p, i) => `${i ? 'L' : 'M'}${X(i).toFixed(1)},${Y(p.avg).toFixed(1)}`).join(' ');
+  const base = t.baseline ? `<line x1="20" x2="380" y1="${Y(t.baseline.mean)}" y2="${Y(t.baseline.mean)}" stroke="#9aa6b8" stroke-dasharray="4 4"/>` : '';
+  svg.innerHTML = base + `<path d="${line}" fill="none" stroke="#2a6db0" stroke-width="2.5"/>` +
+    pts.map((p, i) => `<circle cx="${X(i)}" cy="${Y(p.avg)}" r="3.5" fill="#2a6db0"><title>${esc(p.day)}: ${p.avg} ${esc(t.unit)}</title></circle>`).join('') +
+    `<text x="20" y="166" font-size="10" fill="#6b778c">${esc(pts[0].day)}</text><text x="380" y="166" font-size="10" fill="#6b778c" text-anchor="end">${esc(pts.at(-1).day)}</text>`;
+  $('trendNote').textContent = t.baseline ? `Dashed line = personal baseline (${t.baseline.mean.toFixed(1)} ${t.unit}, n=${t.baseline.n}). Gaps are not filled.` : 'No personal baseline yet.';
+}
+
+async function load() {
+  const o = await get(`/overview/${AID}`);
+  $('demo').textContent = (o.demo_data ? 'DEMO DATA' : 'DATA') + ' • NOT A MEDICAL RECORD';
+  $('cards').innerHTML = o.cards.map(c => `
+    <div class="card ${esc(c.status)}" data-code="${esc(c.indicator)}" data-name="${esc(c.name)}" title="${esc((c.why || []).join('\n\n'))}">
+      <div class="k">${esc(c.name)}</div>
+      <div class="v">${esc(c.value)} <small>${c.value === 'not available' ? '' : esc(c.unit)}</small></div>
+      <span class="badge">${esc(label[c.status] || c.status)}</span>
+      <div class="m">${c.measured_at ? esc(c.measured_at) + ' · ' + esc(c.source_type) : 'no reading'}</div>
+    </div>`).join('');
+  document.querySelectorAll('.card').forEach(el => el.onclick = () => trend(el.dataset.code, el.dataset.name));
+  $('alerts').innerHTML = o.open_alerts.length ? o.open_alerts.slice(0, 5).map(a => `<div class="alert"><b>${esc(a.severity.toUpperCase())} · ${esc(a.triggered_at)}</b>${esc(a.explanation)}
+      <div><button onclick="ack(${a.id})">Acknowledge</button></div></div>`).join('') : '<div class="note">No open alerts.</div>';
+  $('routines').innerHTML = o.routines_due.length ? o.routines_due.map(r => `<div class="routine">${esc(r.title)}
+      <div><button onclick="done(${r.id})">Done</button></div></div>`).join('') : '<div class="note">All routine items completed.</div>';
+  const ev = await get('/evidence');
+  $('ev').innerHTML = ev.map(e => `<div>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)} <span class="note">${esc(e.license || 'licence: to be recorded')}</span></div>`).join('');
+  trend('heart_rate', 'Heart rate');
+}
+async function ack(id) { await fetch(`/api/alerts/${id}/acknowledge`, {method:'POST'}); load(); }
+async function done(id) { await fetch(`/api/routines/${id}/complete`, {method:'POST'}); load(); }
+load().catch(e => { $('demo').textContent = 'Could not reach the API: ' + e.message; });
+</script>
+</body>
+</html>

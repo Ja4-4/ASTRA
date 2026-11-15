@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ASTRA by FALAK: Void, Hull, Ultraviolet. */
+  --bg:        #0B0A10;  /* Void */
+  --surface-1: #1A1724;  /* Hull */
+  --surface-2: #221E2F;
+  --line:      #2E2A3B;  /* Seam */
+  --line-strong:#4A4560;
+  --text:      #F1EEF8;  /* Moon White */
+  --text-muted:#A39DB5;  /* Dust */
+  --brand:      #A684FF; /* Ultraviolet: the current step, primary actions, focus */
+  --brand-soft: rgba(166, 132, 255, 0.14);
+  --on-brand:   #0B0A10;
+  --starlight:  #F1EEF8;
+  --ring:       transparent;
+  --grid:       transparent;
+  /* status: reserved, never decoration */
+  --ok:      #3FBF74;
+  --watch:   #F0A23B;
+  --act:     #FF5A5F;
+  --nodata:  #8A8499;
+  --nodata-text: #A39DB5;
+  /* chart series: soft, mid-tone hues that stay calm on Void. Status colours above stay reserved for status. */
+  --c-bp: #7AA2F7; --c-bp2: #5FD0C4; --c-hr: #F28FA0; --c-sleep: #B197FC; --c-mood: #F2C46D; --c-glucose: #7BD3A0; --c-temp: #F2A27A; --c-ex: #6CC3E8;
+  color-scheme: dark;
+}
+
+/* Light surface for projectors: letters turn Void, Ultraviolet deepens to keep 4.5:1. */
+:root[data-theme='light'] {
+  --bg:        #F3F1F8;
+  --surface-1: #FFFFFF;
+  --surface-2: #F7F5FB;
+  --line:      #DAD5E6;
+  --line-strong:#8C86A0;
+  --text:      #0B0A10;
+  --text-muted:#4E4860;
+  --brand:      #5B3FD0;
+  --brand-soft: rgba(91, 63, 208, 0.10);
+  --on-brand:   #FFFFFF;
+  --starlight:  #0B0A10;
+  --ok:      #0A7A3B;
+  --watch:   #A85200;
+  --act:     #C40F1F;
+  --nodata:  #5E6670;
+  --nodata-text: #5E6670;
+  --c-bp: #2F5FC4; --c-bp2: #0F8B7F; --c-hr: #C03A58; --c-sleep: #6A4FD6; --c-mood: #A66A00; --c-glucose: #1E8A55; --c-temp: #B5541F; --c-ex: #11709B;
+  color-scheme: light;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+.num { font-variant-numeric: tabular-nums; }
+.font-mono { font-family: ui-monospace, monospace; }
+
+:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+
+select { cursor: pointer; }
+.page-title { font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; }
+
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--line-strong);
+  border-radius: 2px;
+}
+.card-raised { background: var(--surface-2); border: 1px solid var(--line); border-radius: 2px; }
+
+/* Section heading of a procedure sheet: bold, ruled underneath. */
+.panel-head {
+  display: flex; align-items: center; gap: 8px;
+  margin: -12px -12px 12px; padding: 9px 12px;
+  border-bottom: 2px solid var(--text);
+  font-family: 'Chakra Petch', sans-serif; font-size: 18px; font-weight: 700; line-height: 22px; color: var(--text);
+}
+h1, h2, .font-display { font-family: 'Chakra Petch', sans-serif; }
+.panel-head svg { color: var(--brand); }
+/* Primary action: Ultraviolet with one 45° cut corner (brand rule: only here and on the symbol). */
+.btn-cut { clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%); }
+.p-4 > .panel-head { margin: -16px -16px 14px; padding: 10px 16px; }
+.panel-code { color: var(--brand); letter-spacing: 0.08em; }
+
+.console-grid { background-color: var(--bg); }
+
+/* Telemetry readout: tiny label over a mono value. */
+.tlm-label { font-size: 12px; color: var(--text-muted); line-height: 14px; }
+.tlm-value { font-variant-numeric: tabular-nums; font-size: 14px; line-height: 18px; color: var(--text); white-space: nowrap; }
+
+.demo-strip { background: var(--surface-1); }
+.card-active { background: var(--brand-soft) !important; box-shadow: inset 4px 0 0 var(--brand); }
+
+.text-nodata-strong { color: var(--nodata-text); }
+
+.sr-only-focusable:not(:focus) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@keyframes pulse-act { 0%, 100% { opacity: 1 } 50% { opacity: .45 } }
+@keyframes atlas-ping { 0% { transform: scale(1); opacity: 0.7; } 70%, 100% { transform: scale(1.45); opacity: 0; } }
+@keyframes atlas-wave { 0%, 100% { transform: scaleY(0.35); } 50% { transform: scaleY(1); } }
+.pulse-act { animation: pulse-act 1.2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 8px; }
+
+/* The 3D viewport always sits on Void (the additive skin needs a dark field). */
+.force-dark {
+  --bg: #0B0A10; --surface-1: #1A1724; --surface-2: #221E2F; --line: #2E2A3B; --line-strong: #4A4560;
+  --text: #F1EEF8; --text-muted: #A39DB5; --brand: #A684FF; --brand-soft: rgba(166, 132, 255, 0.14); --on-brand: #0B0A10; --starlight: #F1EEF8;
+  --ok: #3FBF74; --watch: #F0A23B; --act: #FF5A5F; --nodata: #8A8499; --nodata-text: #A39DB5;
+  --c-bp: #7AA2F7; --c-bp2: #5FD0C4; --c-hr: #F28FA0; --c-sleep: #B197FC; --c-mood: #F2C46D; --c-glucose: #7BD3A0; --c-temp: #F2A27A; --c-ex: #6CC3E8;
+  color: var(--text);
+}
+
+/* Instrument inputs: no browser spinners. */
+input[type='number']::-webkit-outer-spin-button, input[type='number']::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type='number'] { -moz-appearance: textfield; appearance: textfield; }

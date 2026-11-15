@@ -1,0 +1,24 @@
+{
+  "target": "env",
+  "source_name": "NASA OSDR Environmental Data App (ISS) - RR-7",
+  "source_type": "imported",
+  "format": "wide",
+  "timestamp_col": "time_utc",
+  "wide": {
+    "columns": {
+      "temperature_iss_c": {
+        "indicator": "cabin_temp",
+        "unit": "°C"
+      },
+      "humidity_iss_pct": {
+        "indicator": "humidity",
+        "unit": "%"
+      },
+      "co2_iss_ppm": {
+        "indicator": "co2",
+        "unit": "ppm",
+        "quality_col": "co2_iss_ppm_quality"
+      }
+    }
+  }
+}

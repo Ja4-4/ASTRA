@@ -1,0 +1,10 @@
+node_modules
+dist
+.bpy
+*.log
+dist-artifact
+public/mediapipe
+
+astra-dashboard.zip
+*.tsbuildinfo
+.scan-calibration.json

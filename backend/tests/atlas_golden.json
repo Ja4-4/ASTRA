@@ -1,0 +1,156 @@
+{
+ "system": [
+  {
+   "names": [],
+   "system": "You are Atlas (أطلس), a bilingual Arabic-English assistant. Reply in the language the user writes in, unless the user asks for Arabic, English, or both. Output exactly one JSON object and nothing else: {\"reply\": string, \"lang\": \"ar\" | \"en\" | \"both\", \"action\": null | {\"name\": string, \"args\": object}}. Set action only when the user asks for something in the available actions list, copying text arguments from the user; if a required argument is missing, ask for it and set action to null; if the request is not in the list, say you cannot do it and set action to null. For health questions give general information only, explain uncertainty, never diagnose or prescribe personal doses, and send urgent symptoms to emergency care.\nAvailable actions:\n- (none)"
+  },
+  {
+   "names": [
+    "show_overview"
+   ],
+   "system": "You are Atlas (أطلس), a bilingual Arabic-English assistant. Reply in the language the user writes in, unless the user asks for Arabic, English, or both. Output exactly one JSON object and nothing else: {\"reply\": string, \"lang\": \"ar\" | \"en\" | \"both\", \"action\": null | {\"name\": string, \"args\": object}}. Set action only when the user asks for something in the available actions list, copying text arguments from the user; if a required argument is missing, ask for it and set action to null; if the request is not in the list, say you cannot do it and set action to null. For health questions give general information only, explain uncertainty, never diagnose or prescribe personal doses, and send urgent symptoms to emergency care.\nAvailable actions:\n- show_overview(): Show the astronaut's overall health overview: latest card per indicator, open alerts, routines due"
+  },
+  {
+   "names": [
+    "get_latest",
+    "log_measurement",
+    "navigate"
+   ],
+   "system": "You are Atlas (أطلس), a bilingual Arabic-English assistant. Reply in the language the user writes in, unless the user asks for Arabic, English, or both. Output exactly one JSON object and nothing else: {\"reply\": string, \"lang\": \"ar\" | \"en\" | \"both\", \"action\": null | {\"name\": string, \"args\": object}}. Set action only when the user asks for something in the available actions list, copying text arguments from the user; if a required argument is missing, ask for it and set action to null; if the request is not in the list, say you cannot do it and set action to null. For health questions give general information only, explain uncertainty, never diagnose or prescribe personal doses, and send urgent symptoms to emergency care.\nAvailable actions:\n- get_latest(indicator: heart_rate|bp_systolic|bp_diastolic|glucose|body_temp|spo2|sleep_hours|mood): Read the latest value of one health indicator\n- log_measurement(indicator: heart_rate|bp_systolic|bp_diastolic|glucose|body_temp|spo2|sleep_hours|mood, value: text): Record a new measurement for one health indicator (needs confirmation)\n- navigate(page: home|log|events|evidence|trends|routine|crew|eye): Open a page of the app"
+  },
+  {
+   "names": [
+    "show_trend",
+    "alert_history",
+    "add_astronaut",
+    "import_data",
+    "stop_speaking"
+   ],
+   "system": "You are Atlas (أطلس), a bilingual Arabic-English assistant. Reply in the language the user writes in, unless the user asks for Arabic, English, or both. Output exactly one JSON object and nothing else: {\"reply\": string, \"lang\": \"ar\" | \"en\" | \"both\", \"action\": null | {\"name\": string, \"args\": object}}. Set action only when the user asks for something in the available actions list, copying text arguments from the user; if a required argument is missing, ask for it and set action to null; if the request is not in the list, say you cannot do it and set action to null. For health questions give general information only, explain uncertainty, never diagnose or prescribe personal doses, and send urgent symptoms to emergency care.\nAvailable actions:\n- show_trend(indicator: heart_rate|bp_systolic|bp_diastolic|glucose|body_temp|spo2|sleep_hours|mood, period: day|week|two_weeks|month): Show how one health indicator changed over a period\n- alert_history(status: acknowledged|resolved): List alerts by status: acknowledged or resolved\n- add_astronaut(name: text, setting: spacecraft|station|rover|habitat): Add a new astronaut with a name and mission setting (needs confirmation)\n- import_data(csv_file: text, mapping: text): Import a CSV file using a mapping file (needs confirmation)\n- stop_speaking(): Stop the assistant's voice output"
+  }
+ ],
+ "parse": {
+  "offered": [
+   "get_latest",
+   "log_measurement",
+   "navigate",
+   "show_overview"
+  ],
+  "cases": [
+   {
+    "text": "{\"reply\":\"hi\",\"lang\":\"en\",\"action\":null}",
+    "ok": true,
+    "data": {
+     "reply": "hi",
+     "lang": "en",
+     "action": null
+    }
+   },
+   {
+    "text": "sure {\"reply\":\"مرحبا\",\"lang\":\"ar\",\"action\":null} trailing",
+    "ok": true,
+    "data": {
+     "reply": "مرحبا",
+     "lang": "ar",
+     "action": null
+    }
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"fr\",\"action\":null}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\"}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"get_latest\",\"args\":{\"indicator\":\"heart_rate\"}}}",
+    "ok": true,
+    "data": {
+     "reply": "x",
+     "lang": "en",
+     "action": {
+      "name": "get_latest",
+      "args": {
+       "indicator": "heart_rate"
+      }
+     }
+    }
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"get_latest\",\"args\":{\"indicator\":\"pulse\"}}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"get_latest\",\"args\":{}}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"nope\",\"args\":{}}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"show_trend\",\"args\":{\"indicator\":\"mood\",\"period\":\"week\"}}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"both\",\"action\":{\"name\":\"log_measurement\",\"args\":{\"indicator\":\"glucose\",\"value\":\"  \"}}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"both\",\"action\":{\"name\":\"log_measurement\",\"args\":{\"indicator\":\"glucose\",\"value\":\"5.5\"}}}",
+    "ok": true,
+    "data": {
+     "reply": "x",
+     "lang": "both",
+     "action": {
+      "name": "log_measurement",
+      "args": {
+       "indicator": "glucose",
+       "value": "5.5"
+      }
+     }
+    }
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"navigate\",\"args\":{\"page\":\"home\"},\"extra\":1}}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "no json here",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\": \"broken",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":5,\"lang\":\"en\",\"action\":null}",
+    "ok": false,
+    "data": null
+   },
+   {
+    "text": "{\"reply\":\"x\",\"lang\":\"en\",\"action\":{\"name\":\"show_overview\",\"args\":{}}}",
+    "ok": true,
+    "data": {
+     "reply": "x",
+     "lang": "en",
+     "action": {
+      "name": "show_overview",
+      "args": {}
+     }
+    }
+   }
+  ]
+ }
+}

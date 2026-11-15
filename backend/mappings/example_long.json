@@ -1,0 +1,13 @@
+{
+  "_comment": "EXAMPLE ONLY. For files with one row per measurement: columns for time, indicator name, value and (optionally) unit.",
+  "source_name": "Example long-format file",
+  "source_type": "imported",
+  "format": "long",
+  "date_col": "Date",
+  "time_col": "Time",
+  "dayfirst": false,
+  "astronaut_col": null,
+  "default_astronaut": "subject_1",
+  "long": {"indicator_col": "Measure", "value_col": "Value", "unit_col": "Unit"},
+  "indicator_aliases": {"Resting pulse": "heart_rate", "Fasting glucose": "glucose"}
+}
