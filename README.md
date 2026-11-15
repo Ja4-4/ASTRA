@@ -2,6 +2,8 @@
 
 **Astronauts far from Earth cannot wait for a doctor to read their numbers. ASTRA lets each crew member check their own health in minutes, and compares every number with their own Earth "usual", not with a textbook average.**
 
+**Try it now: https://astra-sigma-taupe.vercel.app** (runs on demo data in your browser; allow the camera for the scan)
+
 NASA Space Apps Challenge 2026 · Challenge: *Create Health Monitoring Software for Astronauts on Space Missions* · Team FALAK (فلك)
 
 > Self-assessment and guidance, not a diagnosis. All demo data is synthetic (fictional astronaut "Cmdr. Layla Haddad").
