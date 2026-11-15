@@ -2,7 +2,9 @@
 
 **Astronauts far from Earth cannot wait for a doctor to read their numbers. ASTRA lets each crew member check their own health in minutes, and compares every number with their own Earth "usual", not with a textbook average.**
 
-**Try it now: https://astra-sigma-taupe.vercel.app** (runs on demo data in your browser; allow the camera for the scan)
+## Live demo: https://astra-sigma-taupe.vercel.app
+
+Open it in Chrome and allow the camera and microphone. When the team's station server is online the corner says **Live data** and Atlas answers with the local AI model; otherwise the site runs on demo data in your browser. Try asking Atlas: *"How is my blood pressure?"* or *"How did I sleep?"*
 
 NASA Space Apps Challenge 2026 · Challenge: *Create Health Monitoring Software for Astronauts on Space Missions* · Team FALAK (فلك)
 
