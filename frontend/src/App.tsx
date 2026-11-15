@@ -10,6 +10,7 @@ import { DemoKeys } from './components/DemoKeys';
 import { Guide } from './components/Guide';
 import { MetricSheet } from './components/MetricSheet';
 import { AtlasDock } from './components/AtlasDock';
+import { DeviceAccess } from './components/DeviceAccess';
 import { MissionWatcher } from './components/Missions';
 import { CelebrationLayer } from './components/Celebration';
 import { OrbitLoader } from './components/BodyView';
@@ -64,6 +65,7 @@ export default function App() {
       <DemoKeys />
       <Guide />
       <MetricSheet />
+      <DeviceAccess />
       <AtlasDock />
       <MissionWatcher />
       <CelebrationLayer />
